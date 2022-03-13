@@ -7,11 +7,9 @@
         "symfony/var-dumper": "^5.4",
         "symfony/error-handler": "^5.4"
     },
-
     "autoload": {
         "psr-4": {
-            "Acme\\": "src"
+            "NTaoussi\\App\\": "src/"
         }
     }
-
 }
