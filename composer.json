@@ -9,7 +9,8 @@
     },
     "autoload": {
         "psr-4": {
-            "NTaoussi\\App\\": "src/"
+            "NTaoussi\\App\\Src\\": "src/",
+            "NTaoussi\\App\\Lib\\": "lib/"
         }
     }
 }
