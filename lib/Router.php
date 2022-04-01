@@ -1,19 +1,33 @@
 <?php
 
-    namespace NTaoussi\App\Lib;
+    namespace NTaoussi\Lib;
 
-    class Router {
+class Router {
 
-        public $url;
-        public $routes = [];
+    public $url;
+    public $routes = [];
 
-        public function __construct($url) {
-            $this->url = $url;
-        }
+    
 
-        public function get(string $path, string $action) {
-            
+    public function __construct($url) {
+       $this->url = trim($url, '/');
+    }
+
+    public function get(string $path, string $action) {
+            $this->routes['GET'][] = new Route($path, $action);
+    }
+
+    public function post(string $path, string $action) {
+        $this->routes['POST'][] = new Route($path, $action);
+    }
+
+    public function run() {
+        foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+            if ($route->matches($this->url)) {
+                $route->execute();
+            }
         }
     }
+ }
 
 ?>
