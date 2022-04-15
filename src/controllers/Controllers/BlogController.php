@@ -1,6 +1,6 @@
 <?php
 
-namespace NTaoussi\App\Controllers;
+namespace NTaoussi\App\Src\Controllers;
 
 class BlogController {
 
