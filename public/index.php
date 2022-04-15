@@ -4,9 +4,11 @@
 
     use NTaoussi\Lib\Router;
 
+    echo('Hello !');
+
     $router = new Router($_SERVER['REQUEST_URI']);
 
-    $router->get('/', 'NTaoussi\App\Controllers\BlogController@index');
-    $router->get('/posts/:id', 'NTaoussi\App\Controllers\BlogController@showPost');
+    $router->get('/', 'NTaoussi\App\Src\Controllers\BlogController@index');
+    $router->get('/posts/:id', 'NTaoussi\App\Src\Controllers\BlogController@showPost');
 
 ?>
