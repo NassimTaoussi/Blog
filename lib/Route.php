@@ -5,8 +5,8 @@ namespace NTaoussi\Lib;
 class Route {
 
     public function __construct(
-        public $path, 
-        public $action
+        private string $path, 
+        private string $action
     ) {
        
     }
@@ -18,9 +18,9 @@ class Route {
         if(preg_match($pathToMatch, $url, $matches)) {
             $this->matches = $matches;
             return true;
-        } else {
+        } 
             return false;
-        }
+        
     }
 
     public function execute() {

@@ -4,12 +4,10 @@
 
 class Router {
 
-    public $url;
-    public $routes = [];
+    private string $url;
+    private array $routes = [];
 
-    
-
-    public function __construct($url) {
+    public function __construct(string $url) {
        $this->url = trim($url, '/');
     }
 
