@@ -2,6 +2,8 @@
 
 namespace NTaoussi\Src\Classes;
 
+use Exception;
+
     class HomeForm {
 
         private string $firstName;
@@ -16,6 +18,8 @@ namespace NTaoussi\Src\Classes;
             $this->setMessage($message);
         }
 
+        // https://analyse-innovation-solution.fr/publication/fr/php/formulaire-contact-php
+
         /* GETTERS & SETTERS */
 
         // $firstName
@@ -26,6 +30,10 @@ namespace NTaoussi\Src\Classes;
         public function setFirstName($firstName) {
             if(isset($firstName)) {
 
+            }
+            else
+            {
+                throw new Exception("Erreur");
             }
         }
 
