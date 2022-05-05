@@ -2,21 +2,7 @@
 
 namespace NTaoussi\Src\Controller;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
-class BlogController {
-
-    private $loader;
-    protected $twig;
-
-    public function __construct()
-    {
-        $this->loader = new FilesystemLoader(ROOT.'/template');
-
-        $this->twig = new Environment($this->loader);
-    }
-
+class BlogController extends Controller {
 
     public function index() {
         $this->twig->display("home.html.twig");
