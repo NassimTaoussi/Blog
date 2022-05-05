@@ -1,6 +1,6 @@
 <?php
 
-namespace NTaoussi\Src\Controllers;
+namespace NTaoussi\Src\Controller;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;

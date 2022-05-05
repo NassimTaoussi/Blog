@@ -3,21 +3,20 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    
-    <section class="container-fluid" id="sectionPicture">
-        <div class="row">
-                <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(137).webp" class="img-fluid" alt="Me">   
-        </div>
-    </section>
+    <div class="row">
+        <section class="col-6" id="sectionPicture">
+            <div class="row justify-content-center">
+                    <img src="img/Nassim.jpg" class="img-fluid" alt="Me" style="width:500px; height: 800px">   
+            </div>
+        </section>
 
-    <section class="container" id="sectionDescription">
-        <div class="row">
-            <h1>Nassim Taoussi</h1>
-            <h3>Developpeur PHP</h3>
-            <h6></h6>
-        </div>
-    </section>
-
-    {% include "_home_form.html.twig" %}
+        <section class="col-6" id="sectionDescription">
+            <div class="row justify-content-center">
+                <h1>Nassim Taoussi</h1>
+                <h3>Developpeur PHP</h3>
+                {% include "/component/_home-form.html.twig" %}
+            </div>
+        </section>
+    </div>
     
 {% endblock %}
