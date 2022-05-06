@@ -2,7 +2,7 @@
 
     require '../vendor/autoload.php';
 
-    use NTaoussi\Lib\Router;
+    use NTaoussi\Lib\Router\Router;
 
     define('ROOT', dirname(__DIR__));
 

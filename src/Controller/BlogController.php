@@ -2,10 +2,12 @@
 
 namespace NTaoussi\Src\Controller;
 
+use NTaoussi\Lib\Controller\Controller as Controller;
+
 class BlogController extends Controller {
 
     public function index() {
-        $this->twig->display("home.html.twig");
+        $this->render("home.html.twig");
        
     }
 

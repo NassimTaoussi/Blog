@@ -1,6 +1,6 @@
 <?php
 
-namespace NTaoussi\Lib;
+namespace NTaoussi\Lib\Router;
 
 class Route {
 

@@ -1,6 +1,8 @@
 <?php
 
-use NTaoussi\Src\Model\Database;
+namespace NTaoussi\Src\Repository;
+
+use NTaoussi\Lib\Model\Database;
 
 class ModelRepository {
 
@@ -8,7 +10,7 @@ class ModelRepository {
 
     public function __construct()
     {
-        $this->pdo = getPdo();
+        $this->pdo = Database::getPdo();
     }
 
 }

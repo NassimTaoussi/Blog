@@ -1,6 +1,6 @@
 <?php
 
-namespace NTaoussi\Src\Model;
+namespace NTaoussi\Lib\Model;
 
 use PDO;
 

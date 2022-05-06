@@ -2,7 +2,7 @@
 
 namespace NTaoussi\Src\Repository;
 
-use ModelRepository;
+use NTaoussi\Src\Repository\ModelRepository;
 
 class ArticleRepository extends ModelRepository {
 
