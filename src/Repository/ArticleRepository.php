@@ -14,7 +14,7 @@ class ArticleRepository extends ModelRepository {
     */
     public function findAll(): array
     {
-        $result = $this->pdo->query('SELECT * FROM article');
+        $result = $this->pdo->query('SELECT * FROM article ORDER BY maj_date');
 
         $articles = $result->fetchAll();
         
@@ -26,13 +26,19 @@ class ArticleRepository extends ModelRepository {
      * 
      * @return array 
     */
-    public function findOneById(): array
+    public function findOneById(int $id): array
     {
-        $result = $this->pdo->query('SELECT * FROM article ORDER BY maj_date');
-
-        $articles = $result->fetchAll();
+        $result = $this->pdo->query('SELECT * FROM article WHERE id = :id');
+        $result->execute(['id' => $id]);
+        $article = $result->fetch();
         
-        return $articles;
+        return $article;
+    }
+
+    public function delete(int $id): void
+    {
+        $query = $this->pdo->prepare("DELETE FROM article WHERE id = :id");
+        $query->execute(['id' => $id]);
     }
 
 }

@@ -4,15 +4,25 @@
 
 {% block body %}
     <div class="row">
-        <section class="col-6" id="sectionArticles">
-            <div class="row justify-content-center">
-                <h4>Aieaieaie</h4>
-                <ul>
+        <section class="col mt-5 mb-5" id="sectionArticles">
+            <div class="row d-flex justify-content-around">
+
+                <h1 class="text-center">Articles</h1>
+
                     {% for article in allArticles %}
-                        <li>{{ article.title }}</li>
-                        <li>{{ article.author }}</li>
+                        <div class="card mt-5" style="width: 18rem;">
+                            <img src="img/articles/{{article.picture}}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5>{{ article.title }}</h5>
+                                <p>{{ article.chapo }}</p>
+                                <ul>
+                                    <li>{{ article.author }}</li>
+                                    <li>{{ article.maj_date }}</li>
+                                </ul>
+                            </div>
+                        </div>
                     {% endfor %}
-                </ul>
+
             </div>
         </section>
     </div>
