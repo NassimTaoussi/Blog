@@ -10,6 +10,7 @@
 
 
     $router->get('/', 'NTaoussi\Src\Controller\BlogController@index');
+    $router->get('/posts', 'NTaoussi\Src\Controller\BlogController@posts');
     $router->get('/posts/:id', 'NTaoussi\Src\Controller\BlogController@showPost');
 
     $router->run();

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <section class="col-6" id="sectionArticles">
+            <div class="row justify-content-center">
+                <h4>Aieaieaie</h4>
+                <ul>
+                    {% for article in allArticles %}
+                        <li>{{ article.title }}</li>
+                        <li>{{ article.author }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    </div>
+    
+{% endblock %}
