@@ -19,6 +19,9 @@ class Route {
     }
 
     public function matches(string $url) {
+        if(strpos($url, "?") !== false ) {
+            $url = substr($url, 0, strpos($url, "?"));   
+        }
         $path = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);
         $pathToMatch = "#^$path$#";
 

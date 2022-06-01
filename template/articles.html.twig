@@ -4,27 +4,33 @@
 
 {% block body %}
     <div class="row">
-        <section class="col mt-5 mb-5" id="sectionArticles">
-            <div class="row d-flex justify-content-around">
+        <h1 class="text-center">Articles</h1>
+ 
+    
 
-                <h1 class="text-center">Articles</h1>
+        <nav aria-label="...">
+            <ul class="pagination pagination-lg">
+                {% for i in 1.. allPages %}
+                    <li class="page-item {{ page == i ? "active"}} "><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
 
-                    {% for article in allArticles %}
-                        <div class="card mt-5" style="width: 18rem;">
-                            <img src="img/articles/{{article.picture}}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5>{{ article.title }}</h5>
-                                <p>{{ article.chapo }}</p>
-                                <ul>
-                                    <li>{{ article.author }}</li>
-                                    <li>{{ article.maj_date }}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    {% endfor %}
-
+        {% for article in articles %}
+            <div class="col-3">
+                <div class="card mt-5">
+                    <img src="img/articles/{{article.picture}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                       <a href="/posts/{{article.id}}"><h5>{{ article.title }}</h5></a> 
+                        <p>{{ article.chapo }}</p>
+                        <ul>
+                            <li>{{ article.author }}</li>
+                            <li>{{ article.majDate }}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </section>
+        {% endfor %}
     </div>
     
 {% endblock %}
