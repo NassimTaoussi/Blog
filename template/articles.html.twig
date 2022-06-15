@@ -25,7 +25,7 @@
                         <p>{{ article.chapo }}</p>
                         <ul>
                             <li>{{ article.author }}</li>
-                            <li>{{ article.majDate }}</li>
+                            <li>{{ article.majDate|date("m/d/Y") }}</li>
                         </ul>
                     </div>
                 </div>
