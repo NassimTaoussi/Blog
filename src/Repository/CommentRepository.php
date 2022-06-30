@@ -20,11 +20,7 @@ class CommentRepository extends ModelRepository {
         return $comments;
     }
 
-    /** 
-     *
-     * 
-     * @return array 
-    */
+    
     public function findTotalComments(): int
     {
         $result = $this->pdo->query('SELECT COUNT(id) AS nbr_comments FROM comment');
@@ -43,7 +39,22 @@ class CommentRepository extends ModelRepository {
     {
         $result = $this->pdo->query('SELECT * FROM comment LIMIT ' . $start . ',' . $length);
         $comments = $result->fetchAll();
+        $comments = array_map(function($comment) {
+            return new Comment($comment['author'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid']);
+        }, $comments);
         return $comments;
+    }
+
+    public function insertComment($author, $dateOfPost, $content, $valid) {
+        $sql = "INSERT INTO comment (author, date_of_post, content, valid) 
+                VALUES(:author, :dateOfPost, :content, :valid)";
+        $query = $this->pdo->prepare($sql);
+        $query->execute(array(':author'=> $author,
+        ':dateOfPost'=> $dateOfPost = $dateNow = date('Y-m-d H:i:s'),
+        ':content'=> $content,
+        ':valid' => $valid));
+
+
     }
 
 }

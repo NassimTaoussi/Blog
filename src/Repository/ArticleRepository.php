@@ -22,11 +22,7 @@ class ArticleRepository extends ModelRepository {
         return $articles;
     }
 
-    /** 
-     *
-     * 
-     * @return array 
-    */
+    
     public function findTotal(): int
     {
         $result = $this->pdo->query('SELECT COUNT(id) AS nbr_articles FROM article');
@@ -36,11 +32,7 @@ class ArticleRepository extends ModelRepository {
         return (int) $articles["nbr_articles"];
     }
 
-    /** 
-     *
-     * 
-     * @return array 
-    */
+   
     public function findPosts($start, $length): array
     {
         $result = $this->pdo->query('SELECT * FROM article LIMIT ' . $start . ',' . $length);
@@ -52,16 +44,12 @@ class ArticleRepository extends ModelRepository {
     }
 
     
-    /** 
-     *
-     * 
-     * @return array 
-    */
-    public function findOneById(int $id): array
+
+    public function findOneById(int $id): Article
     {
         $result = $this->pdo->query('SELECT * FROM article WHERE id =' . $id);
-        $article = $result->fetch();
-        
+        $post = $result->fetch();
+        $article =  new Article($post['id'], $post['author'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
         return $article;
     }
 

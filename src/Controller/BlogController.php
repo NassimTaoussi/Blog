@@ -4,6 +4,7 @@ namespace NTaoussi\Src\Controller;
 
 use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
 use NTaoussi\Lib\Controller\Controller as Controller;
+use NTaoussi\Src\Model\Comment;
 use NTaoussi\Src\Repository\CommentRepository;
 
 class BlogController extends Controller {
@@ -25,7 +26,6 @@ class BlogController extends Controller {
 
         // Récupérer les enregistrements eux-mêmes
         $articles = $articleRepository->findPosts($start, $nbrElementsByPage);
-        dump($articles);
 
         $this->render("articles.html.twig", [
             'articles' => $articles,
@@ -50,13 +50,43 @@ class BlogController extends Controller {
 
         // Récupérer les enregistrements eux-mêmes
         $comments = $commentRepository->findComments($start, $nbrElementsByPage);
+    
+        //Soumettre un commentaire
+
+        dump($_POST);
+        $errors= [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if(empty($_POST['username'])) {
+                $errors['username'] = "le pseudo est obligatoire";
+            }
+
+            if(empty($_POST['content'])) {
+                $errors['content'] = "le contenu est obligatoire";
+            }
+
+
+            if (empty($errors)) {
+                $dateNow = new \DateTime('now');
+                $dateNow->setTimezone(new \DateTimeZone('UTC'));
+            
+                
+                $comment = New Comment($_POST['username'], $dateNow , $_POST['content'], true);
+                dump($comment);
+                $commentRepository->insertComment(1, $comment->getDateOfPost(), $comment->getContent(), 1);
+            }
+        }
+
         $this->render("article_detail.html.twig", [
             'article' => $article,
             'comments' => $comments,
             'allPages' => $nbrOfPages,
-            'page' => $page
+            'page' => $page,
+            'errors' => $errors
         ]);
     }
+
     
 }
 

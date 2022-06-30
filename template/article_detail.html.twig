@@ -26,18 +26,30 @@
         </nav>
 
         <div class="col-12 border p-3" style="margin-bottom: 20px ">
-            <form>
+            <form action="" method="post">
                 <h5>Ajouter un commentaire</h5>
+
+                {% if errors.username is defined %}
+                    <p> le pseudo doit être renseigner</p>
+                {% endif %}
+
                 <div class="form-group">
-                    <label for="formGroupExampleInput">Email</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Email">
+                    <label for="username">Pseudo</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Pseudo" value="{{ app.request.parameter.get("username")|default('') }}">
                 </div>
-                <div class="form-group">
-                    <label for="formGroupExampleInput2">Commentaire</label>
-                    <textarea class="form-control" id="formGroupExampleInput2" rows="3"></textarea>
+
+                {% if errors.content is defined %}
+                    <p> le contenu doit être renseigner</p>
+                {% endif %}
+
+                <div class="form-group mb-1">
+                    <label for="comment">Commentaire</label>
+                    <textarea placeholder="Votre commentaire" class="form-control" id="content" rows="3" name="content">{{ app.request.parameter.get("content")|default('') }}</textarea>
                 </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            </div>
+        </div>
 
         {% for comment in comments %}
             <div class="col-12 border border-primary" style="margin-bottom: 20px">
