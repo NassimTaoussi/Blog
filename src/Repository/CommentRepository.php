@@ -45,16 +45,24 @@ class CommentRepository extends ModelRepository {
         return $comments;
     }
 
-    public function insertComment($author, $dateOfPost, $content, $valid) {
+    public function insertComment($comment) {
         $sql = "INSERT INTO comment (author, date_of_post, content, valid) 
                 VALUES(:author, :dateOfPost, :content, :valid)";
         $query = $this->pdo->prepare($sql);
-        $query->execute(array(':author'=> $author,
-        ':dateOfPost'=> $dateOfPost = $dateNow = date('Y-m-d H:i:s'),
-        ':content'=> $content,
-        ':valid' => $valid));
+        $query->execute(array(':author'=> $comment->getAuthor(),
+        ':dateOfPost'=> $comment->getDateOfPost()->format('Y-m-d H:i:s'),
+        ':content'=> $comment->getContent(),
+        ':valid' => $comment->getValid()));
 
 
+    }
+
+    public function deleteComment($id)
+    {
+        $req = $this->db->prepare('DELETE FROM comment WHERE id = :id');
+        return $req->execute(array(
+            'id' => $id,
+        ));
     }
 
 }

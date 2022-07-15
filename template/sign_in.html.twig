@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">Se connecter</h1>
+        </div>
+    </div>
+
+    <section class="container" id="signInForm">
+        <div class="row">
+            <div class="col-6 justify-content-center">
+                <form method="POST" action="">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Adresse e-mail</label>
+                        <input type="email" class="form-control" name="email" id="email" value="{{ app.request.parameter.get("email")|default('') }}">
+                    </div>
+                    {% if errors.email is defined %}
+                        <p> l'adresse email doit être renseigner</p>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    {% if errors.password is defined %}
+                        <p> le mot de passe doit être renseigner</p>
+                    {% endif %}
+
+                    <div class="text-center">
+                        <button type="submit" class="col-12 btn btn-primary">Envoyer</button>
+                    <div>
+                </form>
+
+                {% if connexion.connexionSuccess is defined %}
+                        <p>Connexion réussie, bienvenue !</p>
+                {% endif %}
+                {% if connexion.connexionFailure is defined %}
+                        <p>Connexion echouée, veuillez réessayez !</p>
+                {% endif %}
+
+                <a href="register">Vous n'avez pas de compte ? Inscrivez-vous</a>
+
+            </div>
+        </div>
+    </section>
+    
+        
+        
+    
+{% endblock %}

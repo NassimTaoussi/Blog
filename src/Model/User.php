@@ -1,97 +1,130 @@
 <?php
 
+namespace NTaoussi\Src\Model;
+
 class User {
 
-    private string $firstName;
+        private string $firstName;
         private string  $lastName;
         private string $username;
-        private int $age;
+        private \DateTime $age;
         private string $email;
+        private string $password;
         private string $telephoneNumber;
         private string $avatar;
         private bool $validate;
         private bool $admin;
 
-        function construct__($firstName, $lastName, $username, $age, $email, $telephoneNumber, $avatar) {
+        public function __construct($firstName, $lastName, $username, $age, $email, $password) 
+        {
             $this->firstName = $firstName;
             $this->lastName = $lastName;
             $this->username = $username;
             $this->age = $age;
             $this->email = $email;
-            $this->telephoneNumber = $telephoneNumber;
-            $this->avatar = $avatar;
+            $this->password = $password;
         }
 
         /* GETTERS & SETTERS */
 
         // $firstName
 
-        function getFirstName() {
+        public function getFirstName() {
             return $this->firstName;
         }
 
-        function setFirstName($firstName) {
+        public function setFirstName($firstName) {
             $this->firstName = $firstName;
         }
 
         // $lastName
 
-        function getLastName() {
+        public function getLastName() {
             return $this->lastName;
         }
 
-        function setLastName($lastName) {
+        public function setLastName($lastName) {
             $this->lastName = $lastName;
         }
 
         // $username
 
-        function getUsername() {
+        public function getUsername() {
             return $this->username;
         }
 
-        function setUsername($username) {
+        public function setUsername($username) {
             $this->username = $username;
         }
 
         // $age
 
-        function getAge() {
+        public function getAge() {
             return $this->age;
         }
 
-        function setAge($age) {
+        public function setAge($age) {
             $this->age = $age;
         }
 
         // $email
 
-        function getEmail() {
+        public function getEmail() {
             return $this->email;
         }
 
-        function setEmail($email) {
+        public function setEmail($email) {
             $this->email = $email;
+        }
+
+        // $password
+
+        public function getPassword() {
+            return $this->password;
+        }
+
+        public function setPassword($password) {
+            $this->password = $password;
         }
 
         // $telephoneNumber
 
-        function getTelephoneNumber() {
+        public function getTelephoneNumber() {
             return $this->telephoneNumber;
         }
 
-        function setTelephoneNumber($telephoneNumber) {
+        public function setTelephoneNumber($telephoneNumber) {
             $this->telephoneNumber = $telephoneNumber;
         }
 
         // $avatar
 
-        function getAvatar() {
+        public function getAvatar() {
             return $this->avatar;
         }
 
-        function setAvatar($avatar) {
+        public function setAvatar($avatar) {
             $this->avatar = $avatar;
+        }
+
+        // $valid
+
+        public function getValid() {
+            return $this->validate;
+        }
+
+        public function setValid($validate) {
+            $this->validate = $validate;
+        }
+
+        // $admin
+
+        public function getAdmin() {
+            return $this->admin;
+        }
+
+        public function setAdmin($admin) {
+            $this->admin = $admin;
         }
 }
 

@@ -15,6 +15,11 @@ abstract class Controller {
         $twig->display($template, $context);
     }
 
+    public function redirect(string $url) {
+        header('Location: '. $url);
+        exit();
+    }
+
 }
 
 ?>
