@@ -159,7 +159,7 @@ class BlogController extends Controller {
                 $password = htmlspecialchars($_POST['password']);
                 $info = $userRepository->findOneByEmail($email);
                 dump($info);
-                if(password_verify($email, $info[0]["password"]))
+                if(password_verify($password, $info[0]["password"]))
                 {
                     $connexionStatus['connexionSuccess'] = "Connexion réussie";
                 }
