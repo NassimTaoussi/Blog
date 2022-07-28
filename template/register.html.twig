@@ -13,21 +13,6 @@
         <div class="row">
             <div class="col-6 justify-content-center">
                 <form method="POST" action="">
-                    <div class="mb-3">
-                        <label for="firstName" class="form-label">Prénom</label>
-                        <input type="text" class="form-control" name="firstName" id="firstName">
-                    </div>
-                    {% if errors.firstName is defined %}
-                        <p> le prénom doit être renseigner</p>
-                    {% endif %}
-
-                    <div class="mb-3">
-                        <label for="lastName" class="form-label">Nom</label>
-                        <input type="text" class="form-control" name="lastName" id="lastName">
-                    </div>
-                    {% if errors.lastName is defined %}
-                        <p> le nom doit être renseigner</p>
-                    {% endif %}
 
                     <div class="mb-3">
                         <label for="username" class="form-label">Pseudo</label>
@@ -35,14 +20,6 @@
                     </div>
                     {% if errors.username is defined %}
                         <p> le pseudo doit être renseigner</p>
-                    {% endif %}
-
-                    <div class="mb-3">
-                        <label for="bornDate" class="form-label">Âge</label>
-                        <input type="date" class="form-control" name="bornDate" id="bornDate">
-                    </div>
-                    {% if errors.age is defined %}
-                        <p> la date de naissance doit être renseigner</p>
                     {% endif %}
 
                     <div class="mb-3">
@@ -69,7 +46,7 @@
         </div>
     </section>
     
+    {% block javascripts %}    
         
-        
-    
+    {% endblock %}
 {% endblock %}
