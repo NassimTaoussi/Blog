@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     require '../vendor/autoload.php';
 
     use NTaoussi\Lib\Router\Router;
@@ -21,6 +21,12 @@
 
     $router->get('/signin', 'NTaoussi\Src\Controller\BlogController@signIn');
     $router->post('/signin', 'NTaoussi\Src\Controller\BlogController@signIn');
+
+    //Admin
+    
+    $router->get('/postsList', 'NTaoussi\Src\Controller\AdminController@postsList');
+
+    $router->get('/commentsList', 'NTaoussi\Src\Controller\AdminController@commentsList');
 
     $router->run();
 
