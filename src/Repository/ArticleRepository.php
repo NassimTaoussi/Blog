@@ -35,10 +35,10 @@ class ArticleRepository extends ModelRepository {
    
     public function findPosts($start, $length): array
     {
-        $result = $this->pdo->query('SELECT * FROM article LIMIT ' . $start . ',' . $length);
+        $result = $this->pdo->query('SELECT article.id, username, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id LIMIT ' . $start . ',' . $length);
         $posts = $result->fetchAll();
         $posts = array_map(function($post) {
-            return new Article($post['id'], $post['author'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
+            return new Article($post['id'], $post['username'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
         }, $posts);
         return $posts;
     }
@@ -47,9 +47,9 @@ class ArticleRepository extends ModelRepository {
 
     public function findOneById(int $id): Article
     {
-        $result = $this->pdo->query('SELECT * FROM article WHERE id =' . $id);
+        $result = $this->pdo->query('SELECT article.id, username, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id WHERE article.id =' . $id);
         $post = $result->fetch();
-        $article =  new Article($post['id'], $post['author'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
+        $article =  new Article($post['id'], $post['username'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
         return $article;
     }
 
