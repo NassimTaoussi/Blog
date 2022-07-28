@@ -2,6 +2,7 @@
 
 namespace NTaoussi\Src\Controller;
 
+use NTaoussi\Src\Model\FormValidator as FormValidator;
 use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
 use NTaoussi\Lib\Controller\Controller as Controller;
 use NTaoussi\Src\Model\Comment;
@@ -67,7 +68,7 @@ class BlogController extends Controller {
                 $dateNow->setTimezone(new \DateTimeZone('UTC'));
             
                 
-                $comment = new Comment(1, $dateNow , htmlspecialchars($_POST['content']), true);
+                $comment = new Comment(1, $dateNow , $_POST['content'], true);
                 $commentRepository->insertComment($comment);
                 $this->redirect('/posts/' . $_POST['id']);
             }
@@ -92,38 +93,22 @@ class BlogController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if(empty($_POST['firstName'])) {
-                $errors['firstName'] = "le prenom est obligatoire";
-                $errors['lastName'] = "le nom est obligatoire";
                 $errors['username'] = "le pseudo est obligatoire";
-                $errors['bornDate'] = "l'âge est obligatoire";
                 $errors['email'] = "l'email' est obligatoire";
                 $errors['password'] = "le mot de passe est obligatoire";
             }
 
-            dump($_POST);
 
-            $inputBornDate = strtotime(htmlspecialchars($_POST['bornDate']));
+            $inputBornDate = strtotime($_POST['bornDate']);
             $newFormat = date('d-m-Y',$inputBornDate);
 
 
             if (empty($errors)) {
-
-                $firstName = htmlspecialchars($_POST['firstName']);
-                $lastName = htmlspecialchars($_POST['lastName']);
-                $userName = htmlspecialchars($_POST['username']);
-                $bornDate = new \DateTime($newFormat);
-                $email = htmlspecialchars($_POST['email']);
-                $password = htmlspecialchars($_POST['password']);
-
-                dump($bornDate);
             
                 $user = new User(
-                    $firstName,
-                    $lastName,
-                    $userName,
-                    $bornDate,
-                    $email,
-                    $password,
+                    $_POST['username'],
+                    $email = $_POST['email'],
+                    $password = $_POST['password'],
                 );
 
                 $userRepository->insertUser($user);
@@ -143,39 +128,44 @@ class BlogController extends Controller {
         $userRepository = new UserRepository();
 
         $errors= [];
-        $connexionStatus = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            dump($_POST['email']);
-            dump($_POST['password']);
+            if(!empty($_POST['email'] && !empty($_POST['password']))) {
+                    $email = $_POST['email'];
+                    $password = $_POST['password'];
+                    $info = $userRepository->findOneByEmail($email);
+                
+                    if($info == false ) {
+                        $errors['userEmail'] = "Cet utilistateur n'existe pas";
+                    }
+                    else {
 
-            /*if(empty($_POST['email'] && empty($_POST['password']))) {
+                        if(password_verify($password, $info["password"]))
+                        {
+                            
+                            $_SESSION['user'] = [
+                                'username' => $info["username"],
+                                'email' => $info["email"],
+                                'valid' => $info["valid"],
+                                'admin' => $info["admin"],
+                            ];
+                            $this->redirect('/');
+                        }
+                        else{
+                            $errors['userPassword'] = "Le mot de passe n'est pas correct";
+                        }
+                    }                
+            }
+            else {
                 $errors['email'] = "l'email' est obligatoire";
                 $errors['password'] = "le mot de passe est obligatoire";
-            }*/
-            if(empty($errors)){
-                $email = htmlspecialchars($_POST['email']);
-                $password = htmlspecialchars($_POST['password']);
-                $info = $userRepository->findOneByEmail($email);
-                dump($info);
-                if(password_verify($password, $info[0]["password"]))
-                {
-                    $connexionStatus['connexionSuccess'] = "Connexion réussie";
-                }
-                else{
-                    $connexionStatus['connexionFailure'] = "Connexion echouée";
-                }
-                    
-      
             }
-
         }
-        
 
         $this->render("sign_in.html.twig", [
             'errors' => $errors,
-            'connexion' => $connexionStatus,
+            
         ]);
     }
     
