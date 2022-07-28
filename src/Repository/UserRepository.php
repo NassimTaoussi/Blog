@@ -14,29 +14,24 @@ class UserRepository extends ModelRepository {
         $query->execute();
 
         if($query->rowCount() > 0) {
-            $data = $query->fetchAll();
+            $data = $query->fetch();
+            return $data;
         }
         else{
-            print "Error";
-        }
-            
-        return $data;
+            $found = false;
+            return $found;
+        } 
 
     }
 
     public function insertUser($user) {
-        $sql = "INSERT INTO user (first_name, last_name, username, age, email, password, phone_number, avatar, valid, admin) 
-                VALUES(:first_name, :last_name, :username, :age, :email, :password, :phone_number, :avatar, :valid, :admin)";
+        $sql = "INSERT INTO user username, email, password, valid, admin) 
+                VALUES(:username, :email, :password, :valid, :admin)";
         $query = $this->pdo->prepare($sql);
         $query->execute(array(
-        ':first_name'=> $user->getFirstName(),
-        ':last_name'=> $user->getLastName(),
         ':username'=> $user->getUserName(),
-        ':age'=> $user->getAge()->format('Y-m-d'),
         ':email'=> $user->getEmail(),
         ':password'=> password_hash($user->getPassword(), PASSWORD_DEFAULT),
-        ':phone_number' => null,
-        ':avatar' => null,
         ':valid' => null,
         ':admin' => null,
         ));
