@@ -11,7 +11,7 @@ abstract class Controller {
         $loader = new FilesystemLoader(ROOT.'/template');
 
         $twig = new Environment($loader);
-
+        $twig->addGlobal('session', $_SESSION);
         $twig->display($template, $context);
     }
 
