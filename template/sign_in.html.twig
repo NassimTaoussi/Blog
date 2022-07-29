@@ -23,7 +23,7 @@
                             <input type="email" class="form-control" name="email" id="email" value="{{ app.request.parameter.get("email")|default('') }}">
                         </div>
                         {% if errors.email is defined %}
-                            <p> l'adresse email doit être renseigner</p>
+                            <p> {{errors.email}} </p>
                         {% endif %}
 
                         <div class="mb-3">
@@ -31,7 +31,7 @@
                             <input type="password" class="form-control" name="password" id="password">
                         </div>
                         {% if errors.password is defined %}
-                            <p> le mot de passe doit être renseigner</p>
+                            <p>{{errors.password}}</p>
                         {% endif %}
 
                         <div class="text-center">

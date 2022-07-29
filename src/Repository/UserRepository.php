@@ -24,6 +24,17 @@ class UserRepository extends ModelRepository {
 
     }
 
+    public function countByEmail($email){
+
+        $sql = "SELECT count(id) as number FROM user WHERE email = '$email'";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+            $data = $query->fetch();
+            return (int)$data['number'];
+
+    }
+
     public function insertUser($user) {
         $sql = "INSERT INTO user username, email, password, valid, admin) 
                 VALUES(:username, :email, :password, :valid, :admin)";

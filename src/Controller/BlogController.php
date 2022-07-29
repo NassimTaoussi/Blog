@@ -2,7 +2,7 @@
 
 namespace NTaoussi\Src\Controller;
 
-use NTaoussi\Src\Model\FormValidator as FormValidator;
+use NTaoussi\Src\Service\LoginFormValidator;
 use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
 use NTaoussi\Lib\Controller\Controller as Controller;
 use NTaoussi\Src\Model\Comment;
@@ -131,36 +131,30 @@ class BlogController extends Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!empty($_POST['email'] && !empty($_POST['password']))) {
-                    $email = $_POST['email'];
-                    $password = $_POST['password'];
-                    $info = $userRepository->findOneByEmail($email);
-                
-                    if($info == false ) {
-                        $errors['userEmail'] = "Cet utilistateur n'existe pas";
-                    }
-                    else {
+            $form = new LoginFormValidator();
+            $errors = $form->validate($_POST);
+            if(empty($errors))
+            {
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $info = $userRepository->findOneByEmail($email);
 
-                        if(password_verify($password, $info["password"]))
-                        {
+                if(password_verify($password, $info["password"]))
+                {
                             
-                            $_SESSION['user'] = [
-                                'username' => $info["username"],
-                                'email' => $info["email"],
-                                'valid' => $info["valid"],
-                                'admin' => $info["admin"],
-                            ];
-                            $this->redirect('/');
-                        }
-                        else{
-                            $errors['userPassword'] = "Le mot de passe n'est pas correct";
-                        }
-                    }                
+                    $_SESSION['user'] = [
+                        'username' => $info["username"],
+                        'email' => $info["email"],
+                        'valid' => $info["valid"],
+                        'admin' => $info["admin"],
+                    ];
+                    $this->redirect('/');
+                }
+                else{
+                    $errors['userPassword'] = "Le mot de passe n'est pas correct";
+                }
             }
-            else {
-                $errors['email'] = "l'email' est obligatoire";
-                $errors['password'] = "le mot de passe est obligatoire";
-            }
+                                  
         }
 
         $this->render("sign_in.html.twig", [
