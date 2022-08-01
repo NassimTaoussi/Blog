@@ -3,6 +3,7 @@
 namespace NTaoussi\Src\Controller;
 
 use NTaoussi\Src\Service\LoginFormValidator;
+use NTaoussi\Src\Service\RegisterFormValidator;
 use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
 use NTaoussi\Lib\Controller\Controller as Controller;
 use NTaoussi\Src\Model\Comment;
@@ -92,15 +93,8 @@ class BlogController extends Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(empty($_POST['firstName'])) {
-                $errors['username'] = "le pseudo est obligatoire";
-                $errors['email'] = "l'email' est obligatoire";
-                $errors['password'] = "le mot de passe est obligatoire";
-            }
-
-
-            $inputBornDate = strtotime($_POST['bornDate']);
-            $newFormat = date('d-m-Y',$inputBornDate);
+            $form = new RegisterFormValidator();
+            $errors = $form->validate($_POST);
 
 
             if (empty($errors)) {
