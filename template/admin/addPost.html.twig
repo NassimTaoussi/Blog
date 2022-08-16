@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des commentaires{% endblock %}
+
+{% block body %}
+    {% if session.user.admin == 1 %}
+    <div class="row">
+        <h1 class="text-center">Ajouter un article</h1>
+ 
+        <section class="container" id="addPostForm">
+            <div class="row">
+                <div class="col-6 justify-content-center">
+                    <form method="POST" action="">
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" name="title" id="title">
+                        </div>
+                        {% if errors.title is defined %}
+                            <p>{{errors.title}}</p>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="chapo" class="form-label">Chapo</label>
+                            <input type="text" class="form-control" name="chapo" id="chapo">
+                        </div>
+                        {% if errors.chapo is defined %}
+                            <p>{{errors.chapo}}</p>
+                        {% endif %}
+
+                        <div class="form-group mb-3">
+                            <label for="content" class="form-label">Description</label>
+                            <textarea placeholder="Description" class="form-control" id="content" rows="3" name="content">{{ app.request.parameter.get("content")|default('') }}</textarea>
+                        </div>
+                        {% if errors.content is defined %}
+                            <p>{{errors.content}}</p>
+                        {% endif %}
+
+                        <div class="form-group mb-3">
+                            <label for="picture" class="form-label">Image de l'article</label>
+                            <input type="file" class="form-control" name="picture" id="picture">
+                        </div>
+                        {% if errors.picture is defined %}
+                            <p>{{errors.chapo}}</p>
+                        {% endif %}
+                        
+
+                        <div class="text-center">
+                            <button type="submit" class="col-12 btn btn-primary">Envoyer</button>
+                        <div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    {% endif %}
+{% endblock %}
