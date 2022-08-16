@@ -3,9 +3,10 @@
 namespace NTaoussi\Src\Controller;
 
 use NTaoussi\Src\Model\FormValidator as FormValidator;
-use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
-use NTaoussi\Lib\Controller\Controller as Controller;
-use NTaoussi\Src\Model\Comment;
+use NTaoussi\Src\Service\AddPostFormValidator;
+use NTaoussi\Src\Repository\ArticleRepository;
+use NTaoussi\Lib\Controller\Controller;
+use NTaoussi\Src\Model\Article;
 use NTaoussi\Src\Model\User;
 use NTaoussi\Src\Repository\CommentRepository;
 use NTaoussi\Src\Repository\UserRepository;
@@ -25,6 +26,11 @@ class AdminController extends Controller {
 
         // Récupérer les enregistrements eux-mêmes
         $articles = $articleRepository->findPosts($start, $nbrElementsByPage);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $articleRepository->deletePost($_POST['id']);
+                $this->redirect('/postsList');        
+        }
 
         $this->render("admin/postsList.html.twig", [
             'articles' => $articles,
@@ -46,12 +52,39 @@ class AdminController extends Controller {
         $start = ($page - 1) * $nbrElementsByPage;
 
         // Récupérer les enregistrements eux-mêmes
-        $comments = $commentRepository->findComments($start, $nbrElementsByPage);
+        $comments = $commentRepository->findComments($start, $nbrElementsByPage, null);
 
         $this->render("admin/commentsList.html.twig", [
             'comments' => $comments,
             'allPages' => $nbrOfPages,
             'page' => $page,
+        ]);
+    }
+
+    public function addPost() {
+    
+        $articleRepository = new ArticleRepository();
+        $errors= [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $form = new AddPostFormValidator();
+            $errors = $form->validate($_POST);
+
+            if (empty($errors)) {
+                $dateNow = new \DateTime('now');
+                $dateNow->setTimezone(new \DateTimeZone('UTC'));
+            
+                
+                $article = new Article(null, $_SESSION['user']['id'], $_SESSION['user']['username'], $_POST['title'], $dateNow , $_POST['content'], $_POST['chapo'], $_POST['picture']);
+                $articleRepository->insertPost($article);
+                $this->redirect('/');
+            }
+
+        }
+
+        $this->render("admin/addPost.html.twig", [
+            'errors' =>  $errors
         ]);
     }
 
