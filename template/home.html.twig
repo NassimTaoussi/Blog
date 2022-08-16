@@ -14,7 +14,50 @@
             <div class="row justify-content-center">
                 <h1>Nassim Taoussi</h1>
                 <h3>Developpeur PHP</h3>
-                {% include "/component/_home-form.html.twig" %}      
+
+                <section class="container" id="sectionForm">
+                    <div class="row">
+                        <div class="col-6 justify-content-center">
+                            <form method="POST" action="">
+                                <div class="mb-3">
+                                    <label for="inputFirstName" class="form-label">Prénom</label>
+                                    <input type="text" class="form-control" id="inputFirstName">
+                                </div>
+                                {% if errors.firstName is defined %}
+                                    <p>{{errors.firstName}}</p>
+                                {% endif %}
+
+                                <div class="mb-3">
+                                    <label for="inputLastName" class="form-label">Nom</label>
+                                    <input type="text" class="form-control" id="inputLastName">
+                                </div>
+                                {% if errors.lastName is defined %}
+                                    <p>{{errors.lastName}}</p>
+                                {% endif %}
+
+                                <div class="mb-3">
+                                    <label for="inputEmail" class="form-label">Adresse e-mail</label>
+                                    <input type="email" class="form-control" id="inputEmail">
+                                </div>
+                                {% if errors.email is defined %}
+                                    <p>{{errors.email}}</p>
+                                {% endif %}
+
+                                <div class="mb-3">
+                                    <label for="inputMessage" class="form-label">Message</label>
+                                    <textarea class="form-control" id="inputMessage" rows="7"></textarea>
+                                </div>
+                                {% if errors.message is defined %}
+                                    <p>{{errors.message}}</p>
+                                {% endif %}
+
+                                <div class="text-center">
+                                    <button type="submit" class="col-12 btn btn-primary" id="buttonSubmit">Envoyer</button>
+                                <div>
+                            </form>
+                        </div>
+                    </div>
+                </section>         
             </div>
         </section>
     </div>
