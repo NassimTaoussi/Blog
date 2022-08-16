@@ -4,6 +4,8 @@ namespace NTaoussi\Src\Controller;
 
 use NTaoussi\Src\Service\LoginFormValidator;
 use NTaoussi\Src\Service\RegisterFormValidator;
+use NTaoussi\Src\Service\ContactFormValidator;
+use NTaoussi\Src\Service\CommentFormValidator;
 use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
 use NTaoussi\Lib\Controller\Controller as Controller;
 use NTaoussi\Src\Model\Comment;
@@ -14,7 +16,24 @@ use NTaoussi\Src\Repository\UserRepository;
 class BlogController extends Controller {
 
     public function index() {
-        $this->render("home.html.twig");
+
+       $errors = [];
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $form = new ContactFormValidator();
+            $errors = $form->validate($_POST);
+
+            if (empty($errors)) {     
+
+            
+                $this->redirect('/');
+            }
+        }
+
+        $this->render("home.html.twig", [
+            'errors' => $errors,
+        ]);
        
     }
 
@@ -38,11 +57,11 @@ class BlogController extends Controller {
         ]);
     }
 
-    public function showPost(int $id) {
+    public function showPost($id) {
         $articleRepository = new ArticleRepository();
         $commentRepository = new CommentRepository();
 
-        $article = $articleRepository->findOneById($id);
+        $article = $articleRepository->findOneById((int)$id);
 
         // Récupérer le nombre d'enregistrements
         $totalComments = $commentRepository->findTotalComments();
@@ -51,25 +70,24 @@ class BlogController extends Controller {
         $nbrOfPages = ceil($totalComments / $nbrElementsByPage);
         $page = (int)($_GET['page'] ?? 1);
         $start = ($page - 1) * $nbrElementsByPage;
-
+    
         // Récupérer les enregistrements eux-mêmes
-        $comments = $commentRepository->findComments($start, $nbrElementsByPage);
+        $comments = $commentRepository->findComments($start, $nbrElementsByPage, $id);
     
         //Soumettre un commentaire
         $errors= [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(empty($_POST['content'])) {
-                $errors['content'] = "le contenu est obligatoire";
-            }
+            $form = new CommentFormValidator();
+            $errors = $form->validate($_POST);
 
             if (empty($errors)) {
                 $dateNow = new \DateTime('now');
                 $dateNow->setTimezone(new \DateTimeZone('UTC'));
             
                 
-                $comment = new Comment(1, $dateNow , $_POST['content'], true);
+                $comment = new Comment(null, 1, $dateNow , $_POST['content'], true, $article->getId());
                 $commentRepository->insertComment($comment);
                 $this->redirect('/posts/' . $_POST['id']);
             }
@@ -125,8 +143,14 @@ class BlogController extends Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            if(isset($_POST['disconnect']))
+            {
+                session_destroy();
+                $this->redirect('/');
+            }
             $form = new LoginFormValidator();
             $errors = $form->validate($_POST);
+
             if(empty($errors))
             {
                 $email = $_POST['email'];
@@ -135,25 +159,24 @@ class BlogController extends Controller {
 
                 if(password_verify($password, $info["password"]))
                 {
-                            
-                    $_SESSION['user'] = [
-                        'username' => $info["username"],
-                        'email' => $info["email"],
-                        'valid' => $info["valid"],
-                        'admin' => $info["admin"],
-                    ];
-                    $this->redirect('/');
+                                
+                        $_SESSION['user'] = [
+                            'id' => $info["id"],
+                            'username' => $info["username"],
+                            'email' => $info["email"],
+                            'valid' => $info["valid"],
+                            'admin' => $info["admin"],
+                        ];
+                        $this->redirect('/');
                 }
                 else{
                     $errors['userPassword'] = "Le mot de passe n'est pas correct";
                 }
-            }
-                                  
+            }                        
         }
 
         $this->render("sign_in.html.twig", [
             'errors' => $errors,
-            
         ]);
     }
     
