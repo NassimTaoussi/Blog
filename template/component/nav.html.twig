@@ -10,7 +10,7 @@
                     <a class="nav-link" href="/">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="posts">Articles</a>
+                    <a class="nav-link" href="/posts">Articles</a>
                 </li>
             </ul>
 
@@ -19,21 +19,23 @@
                 <button class="btn btn-outline-success" type="submit">Rechercher</button>
             </form>
 
-            <div class="d-flex justify-content-end">
-                <a href="signin"><img src="img/icones/login.svg" alt="" style="width: 40px; height: 40px"></a>
-            </div>
-
             {% if session.user.admin == 1 %}
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         Administration
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="postsList">Liste des articles</a>
-                        <a class="dropdown-item" href="commentsList">Liste des commentaires</a>
-                    </div>
+                        <a class="dropdown-item" href="/postsList">Liste des articles</a>
+                        <a class="dropdown-item" href="/commentsList">Liste des commentaires</a>
+                        <a class="dropdown-item" href="/addPost">Ajouter un article</a>
+                    </div>  
                 </div>
             {% endif %}
+
+            <div class="d-flex justify-content-end">
+                <a href="/signin"><img src="/img/icones/login.svg" alt="" style="width: 40px; height: 40px"></a>
+            </div>
+            
         </div>
     </div>
 </nav>
