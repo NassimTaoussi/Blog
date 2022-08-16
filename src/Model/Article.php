@@ -4,18 +4,20 @@ namespace NTaoussi\Src\Model;
 
 class Article {
     
-    private int $id;
-    private string $author;
+    private ?int $id = null;
+    private int $authorId;
+    private string $authorName;
     private string $title;
     private \DateTime $majDate;
     private string $content;
     private string $chapo;
     private string $picture;
 
-    public function __construct($id, $author, $title, $majDate, $content, $chapo, $picture)
+    public function __construct(?int $id, int $authorId, string $authorName, string $title, \DateTime $majDate, string $content, string $chapo, string $picture)
     {
         $this->id = $id;
-        $this->author = $author;
+        $this->authorId = $authorId;
+        $this->authorName = $authorName;
         $this->title = $title;
         $this->majDate = $majDate;
         $this->content = $content;
@@ -35,14 +37,24 @@ class Article {
         return $this->id;
     }
 
-    // Author
+    // AuthorId
 
-    public function setAuthor($author) {
-        $this->author = $author;
+    public function setAuthorId($authorId) {
+        $this->authorId = $authorId;
     }
 
-    public function getAuthor() {
-        return $this->author;
+    public function getAuthorId() {
+        return $this->authorId;
+    }
+
+    // AuthorName
+
+    public function setAuthorName($authorName) {
+        $this->authorName = $authorName;
+    }
+
+    public function getAuthorName() {
+        return $this->authorName;
     }
 
     // Title
