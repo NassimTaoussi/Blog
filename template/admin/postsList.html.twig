@@ -24,15 +24,24 @@
                     <th scope="col">Titre</th>
                     <th scope="col">Auteur</th>
                     <th scope="col">Date de mise à jour</th>
+                    <th scope="col">Supprimer</th>
                 </tr>
             </thead>
             <tbody>
                 {% for article in articles %}
                 <tr>
-                    <th scope="row">{{article.id}}</th>
-                    <td>{{article.title}}</td>
-                    <td>{{article.author}}</td>
-                    <td>{{ article.majDate|date("m/d/Y") }}</td>
+                    
+                        <th scope="row">{{article.id}}</th>
+                        <td>{{article.title}}</td>
+                        <td>{{article.authorName}}</td>
+                        <td>{{ article.majDate|date("m/d/Y") }}</td>
+                        <td>
+                            <form method="POST" action="">
+                                <input type="hidden" id="id" name="id" value="{{article.id}}">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                        
                 </tr>
                 {% endfor %}
             </tbody>
