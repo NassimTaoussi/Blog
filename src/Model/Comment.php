@@ -4,19 +4,21 @@ namespace NTaoussi\Src\Model;
 
 class Comment {
 
-    private int $id;
+    private ?int $id = null;
     private string $author;
     private \DateTime $dateOfPost;
     private string $content;
     private bool $valid;
+    private int $article;
 
-    public function __construct($id, $author, $dateOfPost, $content, $valid)
+    public function __construct(?int $id, string $author, \DateTime $dateOfPost, string $content, bool $valid, int $article)
     {
         $this->id = $id;
         $this->author = $author;
         $this->dateOfPost = $dateOfPost;
         $this->content = $content;
         $this->valid = $valid;
+        $this->article = $article;
     }
 
     /* GETTERS & SETTERS */
@@ -70,6 +72,16 @@ class Comment {
 
     public function getValid() {
         return $this->valid;
+    }
+
+    // Article
+
+    public function setArticle($article) {
+        $this->valid = $article;
+    }
+
+    public function getArticle() {
+        return $this->article;
     }
 
 }
