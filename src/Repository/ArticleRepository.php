@@ -35,10 +35,10 @@ class ArticleRepository extends ModelRepository {
    
     public function findPosts($start, $length): array
     {
-        $result = $this->pdo->query('SELECT article.id, username, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id LIMIT ' . $start . ',' . $length);
+        $result = $this->pdo->query('SELECT article.id, author, user.username AS usernameAuthor, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id ORDER BY maj_date DESC LIMIT ' . $start . ',' . $length);
         $posts = $result->fetchAll();
         $posts = array_map(function($post) {
-            return new Article($post['id'], $post['username'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
+            return new Article($post['id'], $post['author'], $post['usernameAuthor'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
         }, $posts);
         return $posts;
     }
@@ -47,18 +47,33 @@ class ArticleRepository extends ModelRepository {
 
     public function findOneById(int $id): Article
     {
-        $result = $this->pdo->query('SELECT article.id, username, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id WHERE article.id =' . $id);
+        $result = $this->pdo->query('SELECT article.id, author, user.username AS usernameAuthor, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id WHERE article.id =' . $id);
         $post = $result->fetch();
-        $article =  new Article($post['id'], $post['username'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
+        $article =  new Article((int)$post['id'], $post['author'], $post['usernameAuthor'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
         return $article;
     }
 
     
 
-    public function delete(int $id): void
+    public function deletePost(int $id): void
     {
         $query = $this->pdo->prepare("DELETE FROM article WHERE id = :id");
         $query->execute(['id' => $id]);
+    }
+
+    public function insertPost($article)
+    {
+        $sql = "INSERT INTO article(author, title, chapo, content, maj_date, picture)
+                VALUES(:author, :title, :chapo, :content, :dateOfPost, :picture)";
+        $query = $this->pdo->prepare($sql);
+        $query->execute(array(
+        ':author'=> $article->getAuthor(),
+        ':title' => $article->getTitle(),
+        ':chapo' => $article->getChapo(),
+        ':content'=> $article->getContent(),
+        ':dateOfPost'=> $article->getMajDate()->format('Y-m-d H:i:s'),
+        ':picture' => $article->getPicture(),
+        ));
     }
 
 }
