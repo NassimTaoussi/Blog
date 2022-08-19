@@ -52,7 +52,7 @@ class AdminController extends Controller {
         $start = ($page - 1) * $nbrElementsByPage;
 
         // Récupérer les enregistrements eux-mêmes
-        $comments = $commentRepository->findComments($start, $nbrElementsByPage, null);
+        $comments = $commentRepository->findAllCommentsNotValid($start, $nbrElementsByPage);
 
         $this->render("admin/commentsList.html.twig", [
             'comments' => $comments,
