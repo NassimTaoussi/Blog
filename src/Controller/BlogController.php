@@ -72,7 +72,7 @@ class BlogController extends Controller {
         $start = ($page - 1) * $nbrElementsByPage;
     
         // Récupérer les enregistrements eux-mêmes
-        $comments = $commentRepository->findComments($start, $nbrElementsByPage, $id);
+        $comments = $commentRepository->findCommentsByArticle($start, $nbrElementsByPage, $id);
     
         //Soumettre un commentaire
         $errors= [];
