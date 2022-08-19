@@ -12,11 +12,13 @@ class CommentRepository extends ModelRepository {
      * 
      * @return array 
     */
-    public function findAllComments(): array
+    public function findAllCommentsNotValid($start, $length,): array
     {
-        $result = $this->pdo->query('SELECT * FROM comment ORDER BY maj_date');
-        $comments = $result->fetch();
-        
+        $result = $this->pdo->query('SELECT comment.id, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.valid = 0 LIMIT ' . $start . ',' . $length);
+        $comments = $result->fetchAll();
+        $comments = array_map(function($comment) {
+            return new Comment($comment['id'], $comment['username'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid'], $comment['article']);
+        }, $comments);
         return $comments;
     }
 
@@ -35,7 +37,7 @@ class CommentRepository extends ModelRepository {
      * 
      * @return array 
     */
-    public function findComments($start, $length, $id): array
+    public function findCommentsByArticle($start, $length, $id): array
     {
         $result = $this->pdo->query('SELECT comment.id, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.article = ' . $id . ' LIMIT ' . $start . ',' . $length);
         $comments = $result->fetchAll();
