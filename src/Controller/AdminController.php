@@ -54,6 +54,11 @@ class AdminController extends Controller {
         // Récupérer les enregistrements eux-mêmes
         $comments = $commentRepository->findAllCommentsNotValid($start, $nbrElementsByPage);
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $commentRepository->deleteComment($_POST['id']);
+            $this->redirect('/commentsList');        
+        }
+
         $this->render("admin/commentsList.html.twig", [
             'comments' => $comments,
             'allPages' => $nbrOfPages,

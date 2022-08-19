@@ -29,6 +29,7 @@
     $router->post('/postsList', 'NTaoussi\Src\Controller\AdminController@postsList');
 
     $router->get('/commentsList', 'NTaoussi\Src\Controller\AdminController@commentsList');
+    $router->post('/commentsList', 'NTaoussi\Src\Controller\AdminController@commentsList');
 
     $router->get('/addPost', 'NTaoussi\Src\Controller\AdminController@addPost');
     $router->post('/addPost', 'NTaoussi\Src\Controller\AdminController@addPost');

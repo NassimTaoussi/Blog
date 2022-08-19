@@ -35,7 +35,12 @@
                     <td>{{comment.author}}</td>
                     <td>{{comment.content}}</td>
                     <td>{{ comment.date_of_post|date("m/d/Y H:m", "Europe/Paris") }}</td>
-                    <td></td>
+                    <td>
+                        <form method="POST" action="">
+                            <input type="hidden" id="id" name="id" value="{{comment.id}}">
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
                     <td></td>
                 </tr>
                 {% endfor %}

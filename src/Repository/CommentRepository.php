@@ -63,7 +63,7 @@ class CommentRepository extends ModelRepository {
 
     public function deleteComment($id)
     {
-        $req = $this->db->prepare('DELETE FROM comment WHERE id = :id');
+        $req = $this->pdo->prepare('DELETE FROM comment WHERE id = :id');
         return $req->execute(array(
             'id' => $id,
         ));
