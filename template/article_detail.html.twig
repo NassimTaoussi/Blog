@@ -29,15 +29,6 @@
             <form action="" method="post">
                 <h5>Ajouter un commentaire</h5>
 
-                {% if errors.username is defined %}
-                    <p>{{ errors.username}}</p>
-                {% endif %}
-
-                <div class="form-group">
-                    <label for="username">Pseudo</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Pseudo" value="{{ app.request.parameter.get("username")|default('') }}">
-                </div>
-
                 {% if errors.content is defined %}
                     <p>{{errors.content}}</p>
                 {% endif %}

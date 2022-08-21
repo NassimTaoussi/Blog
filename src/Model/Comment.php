@@ -5,16 +5,18 @@ namespace NTaoussi\Src\Model;
 class Comment {
 
     private ?int $id = null;
-    private string $author;
+    private int $authorId;
+    private string $authorName;
     private \DateTime $dateOfPost;
     private string $content;
-    private bool $valid;
+    private int $valid;
     private int $article;
 
-    public function __construct(?int $id, string $author, \DateTime $dateOfPost, string $content, bool $valid, int $article)
+    public function __construct(?int $id, int $authorId, string $authorName, \DateTime $dateOfPost, string $content, int $valid, int $article)
     {
         $this->id = $id;
-        $this->author = $author;
+        $this->authorId = $authorId;
+        $this->authorName = $authorName;
         $this->dateOfPost = $dateOfPost;
         $this->content = $content;
         $this->valid = $valid;
@@ -34,14 +36,24 @@ class Comment {
     }
 
 
-    // Author
+    // AuthorId
 
-    public function setAuthor($author) {
-        $this->author = $author;
+    public function setAuthorId($authorId) {
+        $this->authorId = $authorId;
     }
 
-    public function getAuthor() {
-        return $this->author;
+    public function getAuthorId() {
+        return $this->authorId;
+    }
+
+    // AuthorName
+
+    public function setAuthorName($authorName) {
+        $this->authorName = $authorName;
+    }
+
+    public function getAuthorName() {
+        return $this->authorName;
     }
 
     // DateOfPost
@@ -77,7 +89,7 @@ class Comment {
     // Article
 
     public function setArticle($article) {
-        $this->valid = $article;
+        $this->article = $article;
     }
 
     public function getArticle() {

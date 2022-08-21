@@ -55,8 +55,14 @@ class AdminController extends Controller {
         $comments = $commentRepository->findAllCommentsNotValid($start, $nbrElementsByPage);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $commentRepository->deleteComment($_POST['id']);
-            $this->redirect('/commentsList');        
+            if(isset($_POST['delete'])) {
+                $commentRepository->deleteComment($_POST['delete']);
+                $this->redirect('/commentsList'); 
+            }
+            if(isset($_POST['valid'])) {
+                $commentRepository->validComment($_POST['valid']);
+                $this->redirect('/commentsList'); 
+            }       
         }
 
         $this->render("admin/commentsList.html.twig", [

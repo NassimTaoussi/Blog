@@ -37,11 +37,16 @@
                     <td>{{ comment.date_of_post|date("m/d/Y H:m", "Europe/Paris") }}</td>
                     <td>
                         <form method="POST" action="">
-                            <input type="hidden" id="id" name="id" value="{{comment.id}}">
+                            <input type="hidden" id="id" name="delete" value="{{comment.id}}">
                             <button type="submit" class="btn btn-danger">Supprimer</button>
                         </form>
                     </td>
-                    <td></td>
+                    <td>
+                        <form method="POST" action="">
+                            <input type="hidden" id="id" name="valid" value="{{comment.id}}">
+                            <button type="submit" class="btn btn-success">Valider</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

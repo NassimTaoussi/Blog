@@ -14,10 +14,10 @@ class CommentRepository extends ModelRepository {
     */
     public function findAllCommentsNotValid($start, $length,): array
     {
-        $result = $this->pdo->query('SELECT comment.id, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.valid = 0 LIMIT ' . $start . ',' . $length);
+        $result = $this->pdo->query('SELECT comment.id, comment.author, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.valid = 0 LIMIT ' . $start . ',' . $length);
         $comments = $result->fetchAll();
         $comments = array_map(function($comment) {
-            return new Comment($comment['id'], $comment['username'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid'], $comment['article']);
+            return new Comment($comment['id'],$comment['author'], $comment['username'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid'], $comment['article']);
         }, $comments);
         return $comments;
     }
@@ -39,10 +39,10 @@ class CommentRepository extends ModelRepository {
     */
     public function findCommentsByArticle($start, $length, $id): array
     {
-        $result = $this->pdo->query('SELECT comment.id, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.article = ' . $id . ' LIMIT ' . $start . ',' . $length);
+        $result = $this->pdo->query('SELECT comment.id, comment.author, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.article = ' . $id . ' LIMIT ' . $start . ',' . $length);
         $comments = $result->fetchAll();
         $comments = array_map(function($comment) {
-            return new Comment($comment['id'], $comment['username'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid'], $comment['article']);
+            return new Comment($comment['id'], $comment['author'], $comment['username'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid'], $comment['article']);
         }, $comments);
         return $comments;
     }
@@ -51,7 +51,8 @@ class CommentRepository extends ModelRepository {
         $sql = "INSERT INTO comment (author, date_of_post, content, valid, article) 
                 VALUES(:author, :dateOfPost, :content, :valid, :article)";
         $query = $this->pdo->prepare($sql);
-        $query->execute(array(':author'=> $comment->getAuthor(),
+        $query->execute(array(
+        ':author'=> $comment->getAuthorId(),
         ':dateOfPost'=> $comment->getDateOfPost()->format('Y-m-d H:i:s'),
         ':content'=> $comment->getContent(),
         ':valid' => $comment->getValid(),
@@ -59,6 +60,14 @@ class CommentRepository extends ModelRepository {
         ));
 
 
+    }
+
+    public function validComment($id)
+    {
+        $req = $this->pdo->prepare('UPDATE comment SET valid = 1 WHERE id = :id');
+        return $req->execute(array(
+            'id' => $id,
+        ));
     }
 
     public function deleteComment($id)

@@ -77,6 +77,7 @@ class BlogController extends Controller {
         //Soumettre un commentaire
         $errors= [];
 
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $form = new CommentFormValidator();
@@ -87,7 +88,7 @@ class BlogController extends Controller {
                 $dateNow->setTimezone(new \DateTimeZone('UTC'));
             
                 
-                $comment = new Comment(null, 1, $dateNow , $_POST['content'], true, $article->getId());
+                $comment = new Comment(null, $_SESSION['user']['id'],  $_SESSION['user']['username'], $dateNow , $_POST['content'], 0, $article->getId());
                 $commentRepository->insertComment($comment);
                 $this->redirect('/posts/' . $_POST['id']);
             }

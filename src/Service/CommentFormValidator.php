@@ -12,9 +12,6 @@ class CommentFormValidator implements FormValidator {
         $errors = [];
         $commentRepository = new CommentRepository;
 
-        if(empty($data['username'] )) {
-            $errors['username'] = 'Le champ pseudo est vide';
-        }
         if(empty($data['content'] )) {
             $errors['content'] = 'Le champ commentaire est vide';
         }
