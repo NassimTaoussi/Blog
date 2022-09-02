@@ -15,9 +15,11 @@ class ArticleRepository extends ModelRepository {
     */
     public function findAll(): array
     {
-        $result = $this->pdo->query('SELECT * FROM article ORDER BY maj_date');
+        $sql = "SELECT * FROM article ORDER BY maj_date";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
 
-        $articles = $result->fetchAll();
+        $articles = $query->fetchAll();
         
         return $articles;
     }
@@ -25,35 +27,38 @@ class ArticleRepository extends ModelRepository {
     
     public function findTotal(): int
     {
-        $result = $this->pdo->query('SELECT COUNT(id) AS nbr_articles FROM article');
-
-        $articles = $result->fetch();
+        $sql = "SELECT COUNT(id) AS nbr_articles FROM article";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        $articles = $query->fetch();
         
         return (int) $articles["nbr_articles"];
     }
 
-   
     public function findPosts($start, $length): array
     {
-        $result = $this->pdo->query('SELECT article.id, author, user.username AS usernameAuthor, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id ORDER BY maj_date DESC LIMIT ' . $start . ',' . $length);
-        $posts = $result->fetchAll();
+        $sql = "SELECT article.id, author, user.username AS usernameAuthor, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id ORDER BY maj_date DESC LIMIT :start , :length";
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':start', $start, \PDO::PARAM_INT);
+        $query->bindParam(':length', $length, \PDO::PARAM_INT);
+        $query->execute();
+        $posts = $query->fetchAll();
         $posts = array_map(function($post) {
             return new Article($post['id'], $post['author'], $post['usernameAuthor'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
         }, $posts);
         return $posts;
     }
-
     
-
     public function findOneById(int $id): Article
     {
-        $result = $this->pdo->query('SELECT article.id, author, user.username AS usernameAuthor, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id WHERE article.id =' . $id);
-        $post = $result->fetch();
+        $sql = "SELECT article.id, author, user.username AS usernameAuthor, title, chapo, content, maj_date, picture  FROM article INNER JOIN user ON article.author = user.id WHERE article.id = :id";
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $post = $query->fetch();
         $article =  new Article((int)$post['id'], $post['author'], $post['usernameAuthor'], $post['title'], new \DateTime($post['maj_date']), $post['content'], $post['chapo'], $post['picture']);
         return $article;
     }
-
-    
 
     public function deletePost(int $id): void
     {

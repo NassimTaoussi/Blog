@@ -45,7 +45,7 @@
         {% for comment in comments %}
             <div class="col-12 border border-primary" style="margin-bottom: 20px">
                 <ul class="list-group">
-                    <li class="list-group-item">{{ comment.author }}</li>
+                    <li class="list-group-item">{{ comment.authorName }}</li>
                     <li class="list-group-item">{{ comment.content }}</li>
                     <li class="list-group-item">{{ comment.date_of_post|date("m/d/Y H:m", "Europe/Paris") }}</li>
                 </ul>

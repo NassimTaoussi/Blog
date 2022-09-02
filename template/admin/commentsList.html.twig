@@ -32,7 +32,7 @@
                 {% for comment in comments %}
                 <tr>
                     <th scope="row">{{comment.id}}</th>
-                    <td>{{comment.author}}</td>
+                    <td>{{comment.authorName}}</td>
                     <td>{{comment.content}}</td>
                     <td>{{ comment.date_of_post|date("m/d/Y H:m", "Europe/Paris") }}</td>
                     <td>

@@ -40,38 +40,6 @@ class AdminController extends Controller {
        
     }
 
-    public function commentsList() {
-        $commentRepository = new CommentRepository();
-
-        // Récupérer le nombre d'enregistrements
-        $totalComments = $commentRepository->findTotalComments();
-
-        $nbrElementsByPage = 10;
-        $nbrOfPages = ceil($totalComments / $nbrElementsByPage);
-        $page = (int)($_GET['page'] ?? 1);
-        $start = ($page - 1) * $nbrElementsByPage;
-
-        // Récupérer les enregistrements eux-mêmes
-        $comments = $commentRepository->findAllCommentsNotValid($start, $nbrElementsByPage);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if(isset($_POST['delete'])) {
-                $commentRepository->deleteComment($_POST['delete']);
-                $this->redirect('/commentsList'); 
-            }
-            if(isset($_POST['valid'])) {
-                $commentRepository->validComment($_POST['valid']);
-                $this->redirect('/commentsList'); 
-            }       
-        }
-
-        $this->render("admin/commentsList.html.twig", [
-            'comments' => $comments,
-            'allPages' => $nbrOfPages,
-            'page' => $page,
-        ]);
-    }
-
     public function addPost() {
     
         $articleRepository = new ArticleRepository();
@@ -97,6 +65,51 @@ class AdminController extends Controller {
         $this->render("admin/addPost.html.twig", [
             'errors' =>  $errors
         ]);
+    }
+
+
+    public function commentsList() {
+        $commentRepository = new CommentRepository();
+
+        // Récupérer le nombre d'enregistrements
+        $totalComments = $commentRepository->findTotalComments();
+
+        $nbrElementsByPage = 10;
+        $nbrOfPages = ceil($totalComments / $nbrElementsByPage);
+        $page = (int)($_GET['page'] ?? 1);
+        $start = ($page - 1) * $nbrElementsByPage;
+
+        // Récupérer les enregistrements eux-mêmes
+        $comments = $commentRepository->findAllCommentsNotValid($start, $nbrElementsByPage);
+
+        $this->render("admin/commentsList.html.twig", [
+            'comments' => $comments,
+            'allPages' => $nbrOfPages,
+            'page' => $page,
+        ]);
+    }
+
+    public function deleteComment() {
+        $commentRepository = new CommentRepository();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if(isset($_POST['delete'])) {
+                $commentRepository->deleteComment($_POST['delete']);
+                $this->redirect('/commentsList'); 
+            }
+        }
+    }
+
+    public function validComment() {
+        $commentRepository = new CommentRepository();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+           
+            if(isset($_POST['valid'])) {
+                $commentRepository->validComment($_POST['valid']);
+                $this->redirect('/commentsList'); 
+            }       
+        }
     }
 
 }

@@ -2,8 +2,6 @@
 
 namespace NTaoussi\Src\Controller;
 
-use NTaoussi\Src\Service\LoginFormValidator;
-use NTaoussi\Src\Service\RegisterFormValidator;
 use NTaoussi\Src\Service\ContactFormValidator;
 use NTaoussi\Src\Service\CommentFormValidator;
 use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
@@ -42,7 +40,7 @@ class BlogController extends Controller {
         // Récupérer le nombre d'enregistrements
         $totalArticles = $articleRepository->findTotal();
 
-        $nbrElementsByPage = 2;
+        $nbrElementsByPage = 4;
         $nbrOfPages = ceil($totalArticles / $nbrElementsByPage);
         $page = (int)($_GET['page'] ?? 1);
         $start = ($page - 1) * $nbrElementsByPage;
@@ -66,7 +64,7 @@ class BlogController extends Controller {
         // Récupérer le nombre d'enregistrements
         $totalComments = $commentRepository->findTotalComments();
 
-        $nbrElementsByPage = 2;
+        $nbrElementsByPage = 5;
         $nbrOfPages = ceil($totalComments / $nbrElementsByPage);
         $page = (int)($_GET['page'] ?? 1);
         $start = ($page - 1) * $nbrElementsByPage;
@@ -103,83 +101,7 @@ class BlogController extends Controller {
             'errors' => $errors
         ]);
     }
-
-    public function register() {
-
-        $userRepository = new UserRepository();
-
-        $errors= [];
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $form = new RegisterFormValidator();
-            $errors = $form->validate($_POST);
-
-
-            if (empty($errors)) {
-            
-                $user = new User(
-                    $_POST['username'],
-                    $email = $_POST['email'],
-                    $password = $_POST['password'],
-                );
-
-                $userRepository->insertUser($user);
-                $this->redirect('/signin');
-            }
-
-        }
-
-        $this->render("register.html.twig", [
-            'errors' => $errors,
-        ]);
-    }
-
     
-    public function signIn() {
-
-        $userRepository = new UserRepository();
-
-        $errors= [];
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            if(isset($_POST['disconnect']))
-            {
-                session_destroy();
-                $this->redirect('/');
-            }
-            $form = new LoginFormValidator();
-            $errors = $form->validate($_POST);
-
-            if(empty($errors))
-            {
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-                $info = $userRepository->findOneByEmail($email);
-
-                if(password_verify($password, $info["password"]))
-                {
-                                
-                        $_SESSION['user'] = [
-                            'id' => $info["id"],
-                            'username' => $info["username"],
-                            'email' => $info["email"],
-                            'valid' => $info["valid"],
-                            'admin' => $info["admin"],
-                        ];
-                        $this->redirect('/');
-                }
-                else{
-                    $errors['userPassword'] = "Le mot de passe n'est pas correct";
-                }
-            }                        
-        }
-
-        $this->render("sign_in.html.twig", [
-            'errors' => $errors,
-        ]);
-    }
     
 }
 

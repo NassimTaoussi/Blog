@@ -14,8 +14,12 @@ class CommentRepository extends ModelRepository {
     */
     public function findAllCommentsNotValid($start, $length,): array
     {
-        $result = $this->pdo->query('SELECT comment.id, comment.author, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.valid = 0 LIMIT ' . $start . ',' . $length);
-        $comments = $result->fetchAll();
+        $sql = "SELECT comment.id, comment.author, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.valid = 0 LIMIT :start , :length";
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':start', $start, \PDO::PARAM_INT);
+        $query->bindParam(':length', $length, \PDO::PARAM_INT);
+        $query->execute();
+        $comments = $query->fetchAll();
         $comments = array_map(function($comment) {
             return new Comment($comment['id'],$comment['author'], $comment['username'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid'], $comment['article']);
         }, $comments);
@@ -25,11 +29,12 @@ class CommentRepository extends ModelRepository {
     
     public function findTotalComments(): int
     {
-        $result = $this->pdo->query('SELECT COUNT(id) AS nbr_comments FROM comment');
-
-        $comments = $result->fetch();
+        $sql = "SELECT COUNT(id) AS nbr_comments FROM comment";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        $comments = $query->fetch();
         
-        return (int) $comments["nbr_comments"];
+        return (int)$comments["nbr_comments"];
     }
 
     /** 
@@ -39,8 +44,13 @@ class CommentRepository extends ModelRepository {
     */
     public function findCommentsByArticle($start, $length, $id): array
     {
-        $result = $this->pdo->query('SELECT comment.id, comment.author, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.article = ' . $id . ' LIMIT ' . $start . ',' . $length);
-        $comments = $result->fetchAll();
+        $sql = "SELECT comment.id, comment.author, date_of_post, username, content, comment.valid, comment.article FROM comment INNER JOIN user ON comment.author = user.id WHERE comment.article = :id AND comment.valid = 1 LIMIT :start , :length";
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':start', $start, \PDO::PARAM_INT);
+        $query->bindParam(':length', $length, \PDO::PARAM_INT);
+        $query->bindParam(':id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $comments = $query->fetchAll();
         $comments = array_map(function($comment) {
             return new Comment($comment['id'], $comment['author'], $comment['username'], new \DateTime($comment['date_of_post']), $comment['content'], $comment['valid'], $comment['article']);
         }, $comments);
