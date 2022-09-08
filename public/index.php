@@ -25,8 +25,8 @@
     $router->get('/signin', 'NTaoussi\Src\Controller\SecurityController@signIn');
     $router->post('/signin', 'NTaoussi\Src\Controller\SecurityController@signIn');
 
-    $router->get('/signin', 'NTaoussi\Src\Controller\SecurityController@disconnect');
-    $router->post('/signin', 'NTaoussi\Src\Controller\SecurityController@disconnect');
+    $router->get('/disconnect', 'NTaoussi\Src\Controller\SecurityController@disconnect');
+    $router->post('/disconnect', 'NTaoussi\Src\Controller\SecurityController@disconnect');
 
     //Admin
     

@@ -46,6 +46,8 @@ class SecurityController extends Controller {
 
         $errors= [];
 
+        session_regenerate_id();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $form = new LoginFormValidator();
@@ -81,11 +83,9 @@ class SecurityController extends Controller {
     }
 
     public function disconnect() {
-        if(isset($_POST['disconnect']))
-            {
-                session_destroy();
-                $this->redirect('/');
-            }
+        session_regenerate_id(); 
+        session_destroy();
+        $this->redirect('/');
     }
 
 }
