@@ -45,19 +45,27 @@ class AdminController extends Controller {
         $articleRepository = new ArticleRepository();
         $errors= [];
 
+        $token = md5(uniqid(rand(), true));
+        $_SESSION['user']['token'] = $token;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if(isset($_POST['csrf_token']))
+            {
+                if($_POST['csrf_token'] == $_SESSION['user']['token'])
+                {
+                    $form = new AddPostFormValidator();
+                    $errors = $form->validate($_POST);
 
-            $form = new AddPostFormValidator();
-            $errors = $form->validate($_POST);
-
-            if (empty($errors)) {
-                $dateNow = new \DateTime('now');
-                $dateNow->setTimezone(new \DateTimeZone('UTC'));
-            
-                
-                $article = new Article(null, $_SESSION['user']['id'], $_SESSION['user']['username'], $_POST['title'], $dateNow , $_POST['content'], $_POST['chapo'], $_POST['picture']);
-                $articleRepository->insertPost($article);
-                $this->redirect('/');
+                    if (empty($errors)) {
+                        $dateNow = new \DateTime('now');
+                        $dateNow->setTimezone(new \DateTimeZone('UTC'));
+                    
+                        
+                        $article = new Article(null, $_SESSION['user']['id'], $_SESSION['user']['username'], $_POST['title'], $dateNow , $_POST['content'], $_POST['chapo'], $_POST['picture']);
+                        $articleRepository->insertPost($article);
+                        $this->redirect('/');
+                    }
+                }
             }
 
         }
@@ -82,6 +90,9 @@ class AdminController extends Controller {
         // Récupérer les enregistrements eux-mêmes
         $comments = $commentRepository->findAllCommentsNotValid($start, $nbrElementsByPage);
 
+        $token = md5(uniqid(rand(), true));
+        $_SESSION['user']['token'] = $token;
+
         $this->render("admin/commentsList.html.twig", [
             'comments' => $comments,
             'allPages' => $nbrOfPages,
@@ -93,9 +104,15 @@ class AdminController extends Controller {
         $commentRepository = new CommentRepository();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if(isset($_POST['delete'])) {
-                $commentRepository->deleteComment($_POST['delete']);
-                $this->redirect('/commentsList'); 
+            if(isset($_POST['csrf_token']))
+            {
+                if($_POST['csrf_token'] == $_SESSION['user']['token'])
+                {
+                    if(isset($_POST['delete'])) {
+                        $commentRepository->deleteComment($_POST['delete']);
+                        $this->redirect('/commentsList'); 
+                    }
+                }
             }
         }
     }
@@ -104,11 +121,16 @@ class AdminController extends Controller {
         $commentRepository = new CommentRepository();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-           
-            if(isset($_POST['valid'])) {
-                $commentRepository->validComment($_POST['valid']);
-                $this->redirect('/commentsList'); 
-            }       
+
+            {
+                if($_POST['csrf_token'] == $_SESSION['user']['token'])
+                {
+                    if(isset($_POST['valid'])) {
+                        $commentRepository->validComment($_POST['valid']);
+                        $this->redirect('/commentsList'); 
+                    }   
+                }
+            }    
         }
     }
 

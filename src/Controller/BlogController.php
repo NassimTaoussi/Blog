@@ -15,18 +15,30 @@ class BlogController extends Controller {
 
     public function index() {
 
+        if(isset($_SESSION['user'])) {
+            $token = md5(uniqid(rand(), true));
+            $_SESSION['user']['token'] = $token;
+        }
+
        $errors = [];
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $form = new ContactFormValidator();
-            $errors = $form->validate($_POST);
 
-            if (empty($errors)) {     
+            if(isset($_POST['csrf_token']))
+            {
+                if($_POST['csrf_token'] == $_SESSION['user']['token'])
+                {
+                    $form = new ContactFormValidator();
+                    $errors = $form->validate($_POST);
+
+                    if (empty($errors)) {               
+                        $this->redirect('/');
+                    }
+                }
+            }
 
             
-                $this->redirect('/');
-            }
         }
 
         $this->render("home.html.twig", [
@@ -74,22 +86,33 @@ class BlogController extends Controller {
     
         //Soumettre un commentaire
         $errors= [];
+        
+        if(isset($_SESSION['user'])) {
+            $token = md5(uniqid(rand(), true));
+            $_SESSION['user']['token'] = $token;
+        }
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if(isset($_POST['csrf_token']))
+            {
+                if($_POST['csrf_token'] == $_SESSION['user']['token'])
+                {
+                    $form = new CommentFormValidator();
+                    $errors = $form->validate($_POST);
 
-            $form = new CommentFormValidator();
-            $errors = $form->validate($_POST);
-
-            if (empty($errors)) {
-                $dateNow = new \DateTime('now');
-                $dateNow->setTimezone(new \DateTimeZone('UTC'));
-            
-                
-                $comment = new Comment(null, $_SESSION['user']['id'],  $_SESSION['user']['username'], $dateNow , $_POST['content'], 0, $article->getId());
-                $commentRepository->insertComment($comment);
-                $this->redirect('/posts/' . $_POST['id']);
+                    if (empty($errors)) {
+                        $dateNow = new \DateTime('now');
+                        $dateNow->setTimezone(new \DateTimeZone('UTC'));
+                    
+                        
+                        $comment = new Comment(null, $_SESSION['user']['id'],  $_SESSION['user']['username'], $dateNow , $_POST['content'], 0, $article->getId());
+                        $commentRepository->insertComment($comment);
+                        $this->redirect('/posts/' . $_POST['id']);
+                    }
+                }
             }
+            
 
         }
 

@@ -37,7 +37,7 @@
                     <label for="comment">Commentaire</label>
                     <textarea placeholder="Votre commentaire" class="form-control" id="content" rows="3" name="content">{{ app.request.parameter.get("content")|default('') }}</textarea>
                 </div>
-
+                <input type="hidden" name="csrf_token" value="{{session.user.token}}">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

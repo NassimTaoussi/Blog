@@ -50,6 +50,8 @@
                                 {% if errors.message is defined %}
                                     <p>{{errors.message}}</p>
                                 {% endif %}
+                                
+                                <input type="hidden" name="csrf_token" value="{{session.user.token}}">
 
                                 <div class="text-center">
                                     <button type="submit" class="col-12 btn btn-primary" id="buttonSubmit">Envoyer</button>
