@@ -4,6 +4,7 @@ namespace NTaoussi\Src\Controller;
 
 use NTaoussi\Src\Model\FormValidator as FormValidator;
 use NTaoussi\Src\Service\AddPostFormValidator;
+use NTaoussi\Src\Service\UpdatePostFormValidator;
 use NTaoussi\Src\Repository\ArticleRepository;
 use NTaoussi\Lib\Controller\Controller;
 use NTaoussi\Src\Model\Article;
@@ -38,6 +39,37 @@ class AdminController extends Controller {
             'page' => $page
         ]);
        
+    }
+
+    public function editPost($id) {
+        $articleRepository = new ArticleRepository();
+        $userRepository = new UserRepository();
+        $errors= [];
+
+        $article = $articleRepository->findOneById($id);
+        $admins = $userRepository->findAllAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $form = new UpdatePostFormValidator();
+            $errors = $form->validate($_POST);
+
+            if (empty($errors)) {
+                $article->setAuthorName($_POST['titlePost']);
+                $article->setChapo($_POST['chapoPost']);
+                $article->setAuthorId($_POST['authorPost']);
+                $article->setContent($_POST['contentPost']);
+
+                $article = $articleRepository->updateArticle($article);
+            }
+            
+        }
+
+        $this->render("admin/editPost.html.twig", [
+            'errors' =>  $errors,
+            'article' => $article,
+            'admins' => $admins
+        ]);
     }
 
     public function addPost() {
@@ -110,11 +142,11 @@ class AdminController extends Controller {
                 {
                     if(isset($_POST['delete'])) {
                         $commentRepository->deleteComment($_POST['delete']);
-                        $this->redirect('/commentsList'); 
                     }
                 }
             }
         }
+        $this->redirect('/commentsList'); 
     }
 
     public function validComment() {
@@ -127,11 +159,11 @@ class AdminController extends Controller {
                 {
                     if(isset($_POST['valid'])) {
                         $commentRepository->validComment($_POST['valid']);
-                        $this->redirect('/commentsList'); 
                     }   
                 }
             }    
         }
+        $this->redirect('/commentsList'); 
     }
 
 }

@@ -46,8 +46,6 @@ class SecurityController extends Controller {
 
         $errors= [];
 
-        session_regenerate_id();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $form = new LoginFormValidator();
@@ -76,6 +74,8 @@ class SecurityController extends Controller {
                 }
             }                        
         }
+
+        dump($_SESSION["user"]);
 
         $this->render("sign_in.html.twig", [
             'errors' => $errors,

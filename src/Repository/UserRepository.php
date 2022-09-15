@@ -24,6 +24,21 @@ class UserRepository extends ModelRepository {
 
     }
 
+    public function findAllAdmin() {
+        $sql = "SELECT * FROM user WHERE user.admin = 1";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+        if($query->rowCount() > 0) {
+            $data = $query->fetchAll();
+            return $data;
+        }
+        else{
+            $found = false;
+            return $found;
+        } 
+    }
+
     public function countByEmail($email){
 
         $sql = "SELECT count(id) as number FROM user WHERE email = '$email'";

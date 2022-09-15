@@ -1,5 +1,7 @@
 <?php
     session_start();
+    session_regenerate_id();
+    
     require '../vendor/autoload.php';
 
     use NTaoussi\Lib\Router\Router;
@@ -32,6 +34,9 @@
     
     $router->get('/postsList', 'NTaoussi\Src\Controller\AdminController@postsList');
     $router->post('/postsList', 'NTaoussi\Src\Controller\AdminController@postsList');
+
+    $router->get('/editPost/:id', 'NTaoussi\Src\Controller\AdminController@editPost');
+    $router->post('/editPost/:id', 'NTaoussi\Src\Controller\AdminController@editPost');
 
     $router->get('/addPost', 'NTaoussi\Src\Controller\AdminController@addPost');
     $router->post('/addPost', 'NTaoussi\Src\Controller\AdminController@addPost');

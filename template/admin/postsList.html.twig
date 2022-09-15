@@ -25,6 +25,7 @@
                     <th scope="col">Auteur</th>
                     <th scope="col">Date de mise à jour</th>
                     <th scope="col">Supprimer</th>
+                    <th scope="col">Modifier</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +42,12 @@
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>
                         </td>
-                        
+                        <td>
+                            <form method="POST" action="">
+                                <input type="hidden" id="id" name="id" value="{{article.id}}">
+                                <button type="submit" class="btn btn-info"><a href="/editPost/{{ article.id }}">Modifier</a></button>
+                            </form>
+                        </td>
                 </tr>
                 {% endfor %}
             </tbody>

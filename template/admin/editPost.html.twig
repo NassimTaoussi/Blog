@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des articles{% endblock %}
+
+{% block body %}
+    {% if session.user.admin == 1 %}
+
+        <section class="container" id="registerForm">
+            <div class="row">
+                <div class="col-6 justify-content-center">
+                    <form method="POST" action="">
+                        <div class="mb-3">
+                            <label for="titlePost" class="form-label">Titre</label>
+                            <input type="text" class="form-control" name="titlePost" id="titlePost" value="{{article.title}}">
+                        </div>
+                        {% if errors.title is defined %}
+                            <p> {{errors.title}} </p>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="chapoPost" class="form-label">Chapo</label>
+                            <input type="text" class="form-control" name="chapoPost" id="chapoPost" value="{{article.chapo}}">
+                        </div>
+                        {% if errors.chapo is defined %}
+                            <p> {{errors.chapo}} </p>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="authorPost" class="form-label">Auteur</label>
+                            <select class="form-select" name="authorPost" id="authorPost" aria-label="Default select example">
+                                {% for admin in admins %}
+                                <option value="{{admin.id}}">{{admin.username}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% if errors.author is defined %}
+                            <p> {{errors.author}} </p>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="contentPost" class="form-label">Contenu</label>
+                            <textarea class="form-control" name="contentPost" id="contentPost" rows="5" cols="33">
+                            {{article.content}}
+                            </textarea>
+                        </div>
+                        {% if errors.content is defined %}
+                            <p> {{errors.content}} </p>
+                        {% endif %}
+
+                        <input type="hidden" name="csrf_token" value="{{session.user.token}}">
+                        <button type="submit" class="btn btn-success">Valider</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
+    {% endif %}
+{% endblock %}

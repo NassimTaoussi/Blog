@@ -68,8 +68,8 @@ class ArticleRepository extends ModelRepository {
 
     public function insertPost($article)
     {
-        $sql = "INSERT INTO article(author, title, chapo, content, maj_date, picture)
-                VALUES(:author, :title, :chapo, :content, :dateOfPost, :picture)";
+        $sql = "INSERT INTO article(author, title, chapo, content, creation_date, maj_date, picture)
+                VALUES(:author, :title, :chapo, :content, :dateOfPost, :dateOfPost, :picture)";
         $query = $this->pdo->prepare($sql);
         $query->execute(array(
         ':author'=> $article->getAuthor(),
@@ -81,6 +81,19 @@ class ArticleRepository extends ModelRepository {
         ));
     }
 
+    public function updateArticle($article) 
+    {
+        $sql = 'UPDATE article SET title = :title, chapo = :chapo, author = :author, content = :content, maj_date = :majDateOfPost WHERE id = :id';
+        $query = $this->pdo->prepare($sql);
+        $query->execute(array(
+        ':title' => $article->getTitle(),
+        ':chapo' => $article->getChapo(),
+        ':author'=> $article->getAuthorId(),
+        ':content'=> $article->getContent(),
+        ':id' => $article->getId(),
+        ':majDateOfPost'=> $article->getMajDate()->format('Y-m-d H:i:s'),
+        ));
+    }
 }
 
 ?>
