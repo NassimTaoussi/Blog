@@ -5,6 +5,9 @@
     require '../vendor/autoload.php';
 
     use NTaoussi\Lib\Router\Router;
+    use NTaoussi\Lib\Exception\AccessDeniedException;
+    use NTaoussi\Lib\Controller\Controller;
+use NTaoussi\Lib\Controller\ErrorController;
 
     define('ROOT', dirname(__DIR__));
 
@@ -50,6 +53,14 @@
     $router->get('/commentsList', 'NTaoussi\Src\Controller\AdminController@validComment');
     $router->post('/commentsList', 'NTaoussi\Src\Controller\AdminController@validComment');
 
+    try 
+    {
     $router->run();
+    } 
+    catch(\Exception $e) 
+    {
+        $error = new ErrorController;
+        $error->error($e);
+    }
 
 ?>
