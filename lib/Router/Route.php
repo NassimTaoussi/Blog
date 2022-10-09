@@ -40,6 +40,10 @@ class Route {
 
         return isset($this->matches[1]) ? $controller->$method($this->matches[1]) : $controller->$method();
     }
+
+    public function getPath() {
+        return $this->path;
+    }
         
 }
 

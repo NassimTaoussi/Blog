@@ -2,6 +2,9 @@
 
     namespace NTaoussi\Lib\Router;
 
+    use NTaoussi\Lib\Exception\AccessDeniedException;
+    use NTaoussi\Lib\Controller\Controller;
+
 class Router {
 
     private string $url;
@@ -22,9 +25,10 @@ class Router {
     public function run() {
         foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
             if ($route->matches($this->url)) {
-                $route->execute();
+                    $route->execute();    
             }
         }
+        return header('HTTP/1.0 404 Not Found');
     }
  }
 

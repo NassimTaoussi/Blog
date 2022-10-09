@@ -67,6 +67,7 @@ class SecurityController extends Controller {
                             'valid' => $info["valid"],
                             'admin' => $info["admin"],
                         ];
+                        $this->setFlash('Vous etes bien connecter' , 'Succès');
                         $this->redirect('/');
                 }
                 else{
@@ -75,7 +76,6 @@ class SecurityController extends Controller {
             }                        
         }
 
-        dump($_SESSION["user"]);
 
         $this->render("sign_in.html.twig", [
             'errors' => $errors,

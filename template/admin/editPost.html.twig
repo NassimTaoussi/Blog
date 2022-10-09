@@ -3,8 +3,7 @@
 {% block title %}Liste des articles{% endblock %}
 
 {% block body %}
-    {% if session.user.admin == 1 %}
-
+    {% if error is empty %}
         <section class="container" id="registerForm">
             <div class="row">
                 <div class="col-6 justify-content-center">
@@ -54,7 +53,6 @@
                 </div>
             </div>
         </section>
-
-
     {% endif %}
+
 {% endblock %}

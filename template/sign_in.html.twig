@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {% if session.user.admin == 1 %}
+    {% if session.user.valid == 1 %}
         <p>Vous êtes déjà connecter, souhaitez vous vous déconnecter ?</p>
         <button type="submit" class="btn btn-danger" name="disconnect" value="Deconnexion"><a href="/disconnect">Deconnexion</a></button>
         
