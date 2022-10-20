@@ -51,15 +51,15 @@ class UserRepository extends ModelRepository {
     }
 
     public function insertUser($user) {
-        $sql = "INSERT INTO user username, email, password, valid, admin) 
+        $sql = "INSERT INTO user (username, email, password, valid, admin) 
                 VALUES(:username, :email, :password, :valid, :admin)";
         $query = $this->pdo->prepare($sql);
         $query->execute(array(
         ':username'=> $user->getUserName(),
         ':email'=> $user->getEmail(),
         ':password'=> password_hash($user->getPassword(), PASSWORD_DEFAULT),
-        ':valid' => null,
-        ':admin' => null,
+        ':valid' => 1,
+        ':admin' => 0,
         ));
 
 
