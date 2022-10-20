@@ -5,21 +5,21 @@
 {% block body %}
 
     {% if session.user.valid == 1 %}
-        <p>Vous êtes déjà connecter, souhaitez vous vous déconnecter ?</p>
-        <button type="submit" class="btn btn-danger" name="disconnect" value="Deconnexion"><a href="/disconnect">Deconnexion</a></button>
+        <p class="mt-4 fs-3">Vous êtes déjà connecter, souhaitez vous vous déconnecter ?</p>
+        <button type="submit" class="btn btn-danger mt-3" name="disconnect" value="Deconnexion"><a href="/disconnect" class="text-decoration-none text-light">Deconnexion</a></button>
         
     {% else %}
         <div class="container">
             <div class="row">
-                <h1 class="text-center">Se connecter</h1>
+                <h1 class="text-center mt-4">Se connecter</h1>
             </div>
         </div>
 
         <section class="container" id="signInForm">
-            <div class="row">
+            <div class="row d-flex justify-content-center text-center">
                 <div class="col-6 justify-content-center">
                     <form method="POST" action="">
-                        <div class="mb-3">
+                        <div class="mb-3 mt-3">
                             <label for="email" class="form-label">Adresse e-mail</label>
                             <input type="email" class="form-control" name="email" id="email" value="{{ app.request.parameter.get("email")|default('') }}">
                         </div>
@@ -35,7 +35,7 @@
                             <p>{{errors.password}}</p>
                         {% endif %}
 
-                        <div class="text-center">
+                        <div class="text-center mt-4">
                             <button type="submit" class="col-12 btn btn-primary">Envoyer</button>
                         <div>
                     </form>
@@ -47,8 +47,9 @@
                             <p>Le mot de passe n'est pas bon</p>
                     {% endif %}
                     
-
-                    <a href="register">Vous n'avez pas de compte ? Inscrivez-vous</a>
+                    <div class="mt-4">
+                        <a href="register">Vous n'avez pas de compte ? Inscrivez-vous</a>
+                    <div>
 
                 </div>
             </div>
