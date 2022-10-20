@@ -14,8 +14,13 @@ class AdminController extends Controller {
 
     public function postsList() {
 
-            $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
-
+            if(empty($_SESSION['user'])){
+                $this->denyAccessUnlessGranted();
+            }
+            else {
+                $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
+            }
+            
             $articleRepository = new ArticleRepository();
             // Récupérer le nombre d'enregistrements
             $totalArticles = $articleRepository->findTotal();
@@ -43,7 +48,12 @@ class AdminController extends Controller {
 
     public function editPost($id) {
 
-        $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
+        if(empty($_SESSION['user'])){
+            $this->denyAccessUnlessGranted();
+        }
+        else {
+            $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
+        }
 
         $articleRepository = new ArticleRepository();
         $userRepository = new UserRepository();
@@ -77,23 +87,23 @@ class AdminController extends Controller {
 
     public function addPost() {
 
-        $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
+        if(empty($_SESSION['user'])){
+            $this->denyAccessUnlessGranted();
+        }
+        else {
+            $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
+        }
 
             $articleRepository = new ArticleRepository();
             $errors= [];
 
-            dump($_SESSION['user']['token']);
-            dump($_POST['csrf_token']);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') 
-        {
-            dump("hello");
+        { 
             if(isset($_POST['csrf_token']))
             {
-                dump("salam");
                 if($_POST['csrf_token'] == $_SESSION['user']['token'])
                 {
-                    dump("coucou");
                     $form = new AddPostFormValidator();
                     $errors = $form->validate($_POST);
 
@@ -118,11 +128,18 @@ class AdminController extends Controller {
 
 
     public function commentsList() {
-        $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
+        
+        if(empty($_SESSION['user'])){
+            $this->denyAccessUnlessGranted();
+        }
+        else {
+            $this->denyAccessUnlessGranted($_SESSION['user']['valid'], $_SESSION['user']['admin']);
+        }
+
         $commentRepository = new CommentRepository();
 
         // Récupérer le nombre d'enregistrements
-        $totalComments = $commentRepository->findTotalComments();
+        $totalComments = $commentRepository->findTotalCommentsNotValid();
 
         $nbrElementsByPage = 10;
         $nbrOfPages = ceil($totalComments / $nbrElementsByPage);
@@ -131,8 +148,6 @@ class AdminController extends Controller {
 
         // Récupérer les enregistrements eux-mêmes
         $comments = $commentRepository->findAllCommentsNotValid($start, $nbrElementsByPage);
-
-        dump($_SESSION['user']);
 
         $this->render("admin/commentsList.html.twig", [
             'comments' => $comments,
@@ -143,10 +158,6 @@ class AdminController extends Controller {
 
     public function deleteComment() {
         $commentRepository = new CommentRepository();
-
-
-        dump($_SESSION['user']['token']);
-        dump($_POST['csrf_token']);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             

@@ -37,6 +37,16 @@ class CommentRepository extends ModelRepository {
         return (int)$comments["nbr_comments"];
     }
 
+    public function findTotalCommentsNotValid(): int
+    {
+        $sql = "SELECT COUNT(id) AS nbr_comments FROM comment WHERE valid = 0";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        $comments = $query->fetch();
+        
+        return (int)$comments["nbr_comments"];
+    }
+
     /** 
      *
      * 
