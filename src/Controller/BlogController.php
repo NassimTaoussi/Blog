@@ -10,6 +10,14 @@ use NTaoussi\Src\Model\Comment;
 use NTaoussi\Src\Model\User;
 use NTaoussi\Src\Repository\CommentRepository;
 use NTaoussi\Src\Repository\UserRepository;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require_once '../Includes/PHPMailer/Exception.php';
+require_once '../Includes/PHPMailer/PHPMailer.php';
+require_once '../Includes/PHPMailer/SMTP.php';
+
 
 class BlogController extends Controller {
 
@@ -24,20 +32,36 @@ class BlogController extends Controller {
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            if(isset($_POST['csrf_token']))
-            {
-                if($_POST['csrf_token'] == $_SESSION['user']['token'])
-                {
+           
                     $form = new ContactFormValidator();
                     $errors = $form->validate($_POST);
 
-                    if (empty($errors)) {               
-                        $this->redirect('/');
-                    }
-                }
-            }
+                    if (empty($errors)) {
+                        try {
+                            // Tentative de création d’une nouvelle instance de la classe PHPMailer
+                            $mail = new PHPMailer (true);
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->SMTPAuth = true;
+                            $mail->Username = "nassim.taoussi@gmail.com";
+                            $mail->Password = "frluxawautxzygxg";
+                            $mail->SMTPSecure = 'ssl';
+                            $mail->Port = 465;
 
+                            $mail->setFrom($_POST['contactEmail']);
+                            $mail->addAddress('nassim.taoussi@gmail.com');
+                            $mail->isHTML(true);
+                            $mail->Body = $_POST['contactMessage'];
+
+                            $mail->send();
+
+                        // (…)
+                        } catch (\Exception $e) {
+                                echo "Erreur : ".$mail->ErrorInfo;
+                        }               
+                        $this->redirect('/');
+                        $this->setFlash('Votre message a bien été envoyer', 'success');
+                    }
             
         }
 
@@ -86,12 +110,6 @@ class BlogController extends Controller {
     
         //Soumettre un commentaire
         $errors= [];
-        
-        if(isset($_SESSION['user'])) {
-            $token = md5(uniqid(rand(), true));
-            $_SESSION['user']['token'] = $token;
-        }
-
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($_POST['csrf_token']))

@@ -10,19 +10,19 @@ class ContactFormValidator implements FormValidator {
         $errors = [];
 
 
-        if(empty($data['firstName'] )) {
+        if(empty($data['contactFirstname'] )) {
             $errors['firstName'] = 'Le champ prenom est vide';
         }
         
-        if(empty($data['lastName'] )) {
+        if(empty($data['contactLastname'] )) {
             $errors['lastName'] = 'Le champ nom est vide';
         }
 
-        if(empty($data['email'] )) {
+        if(empty($data['contactEmail'] )) {
             $errors['email'] = 'Le champ email est vide';
         }
 
-        if(empty($data['message'] )) {
+        if(empty($data['contactMessage'] )) {
             $errors['message'] = 'Le champ message est vide';
         }
 

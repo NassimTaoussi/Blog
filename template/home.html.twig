@@ -21,7 +21,7 @@
                             <form method="POST" action="">
                                 <div class="col-12 mb-3">
                                     <label for="inputFirstName" class="form-label">Prénom</label>
-                                    <input type="text" class="form-control" id="inputFirstName">
+                                    <input type="text" class="form-control" name="contactFirstname" id="inputFirstName">
                                 </div>
                                 {% if errors.firstName is defined %}
                                     <p>{{errors.firstName}}</p>
@@ -29,7 +29,7 @@
 
                                 <div class="col-12 mb-3">
                                     <label for="inputLastName" class="form-label">Nom</label>
-                                    <input type="text" class="form-control" id="inputLastName">
+                                    <input type="text" class="form-control" name="contactLastname" id="inputLastName">
                                 </div>
                                 {% if errors.lastName is defined %}
                                     <p>{{errors.lastName}}</p>
@@ -37,7 +37,7 @@
 
                                 <div class="col-12 mb-3">
                                     <label for="inputEmail" class="form-label">Adresse e-mail</label>
-                                    <input type="email" class="form-control" id="inputEmail">
+                                    <input type="email" class="form-control" name="contactEmail" id="inputEmail">
                                 </div>
                                 {% if errors.email is defined %}
                                     <p>{{errors.email}}</p>
@@ -45,7 +45,7 @@
 
                                 <div class="col-12 mb-3">
                                     <label for="inputMessage" class="form-label">Message</label>
-                                    <textarea class="form-control" id="inputMessage" rows="7"></textarea>
+                                    <textarea class="form-control" name="contactMessage" id="inputMessage" rows="7"></textarea>
                                 </div>
                                 {% if errors.message is defined %}
                                     <p>{{errors.message}}</p>
