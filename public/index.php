@@ -47,10 +47,8 @@ use NTaoussi\Lib\Controller\ErrorController;
     $router->get('/commentsList', 'NTaoussi\Src\Controller\AdminController@commentsList');
     $router->post('/commentsList', 'NTaoussi\Src\Controller\AdminController@commentsList');
 
-    $router->get('/commentsList', 'NTaoussi\Src\Controller\AdminController@deleteComment');
     $router->post('/commentsList', 'NTaoussi\Src\Controller\AdminController@deleteComment');
 
-    $router->get('/commentsList', 'NTaoussi\Src\Controller\AdminController@validComment');
     $router->post('/commentsList', 'NTaoussi\Src\Controller\AdminController@validComment');
 
     try 
