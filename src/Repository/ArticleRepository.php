@@ -72,7 +72,7 @@ class ArticleRepository extends ModelRepository {
                 VALUES(:author, :title, :chapo, :content, :dateOfPost, :dateOfPost, :picture)";
         $query = $this->pdo->prepare($sql);
         $query->execute(array(
-        ':author'=> $article->getAuthor(),
+        ':author'=> $article->getAuthorId(),
         ':title' => $article->getTitle(),
         ':chapo' => $article->getChapo(),
         ':content'=> $article->getContent(),
