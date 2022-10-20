@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des articles{% endblock %}
+{% block title %}Editer des articles{% endblock %}
 
 {% block body %}
     {% if error is empty %}
+        <h1 class="text-center mt-4">Editer un article</h1>
+
         <section class="container" id="registerForm">
-            <div class="row">
-                <div class="col-6 justify-content-center">
+            <div class="row d-flex justify-content-center">
+                <div class="col-sm-10 col-md-8 justify-content-center">
                     <form method="POST" action="">
                         <div class="mb-3">
                             <label for="titlePost" class="form-label">Titre</label>

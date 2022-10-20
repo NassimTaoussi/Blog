@@ -3,20 +3,20 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <section class="col-6" id="sectionPicture">
+    <div class="row d-flex">
+        <section class="col-lg-6 col-sm-12" id="sectionPicture">
             <div class="row justify-content-center">
                     <img src="img/Nassim.jpg" class="img-fluid" alt="Me" style="width:500px; height: 800px">   
             </div>
         </section>
 
-        <section class="col-6" id="sectionDescription">
+        <section class="col-lg-6 col-sm-12" id="sectionDescription">
             <div class="row justify-content-center">
-                <h1>Nassim Taoussi</h1>
-                <h3>Developpeur PHP</h3>
+                <h1 class="text-center mt-3">Nassim Taoussi</h1>
+                <h3 class="text-center">Developpeur PHP</h3>
 
-                <section class="container" id="sectionForm">
-                    <div class="row">
+                <section class="container mt-4" id="sectionForm">
+                    <div class="row d-flex justify-content-center text-center">
                         <div class="col-6 justify-content-center">
                             <form method="POST" action="">
                                 <div class="mb-3">
@@ -60,8 +60,8 @@
                         </div>
                     </div>
                 </section>
-                <section class="mt-3">
-                    <a class="btn btn-xl btn-outline-dark" href="public\pdf\NassimTaoussiCV.pdf" download="">
+                <section class="mt-3 mb-5 d-flex justify-content-center">
+                    <a class="btn btn-xl btn-outline-dark" href="pdf/NassimTaoussiCV.pdf" download="NassimTaoussiCV">
                         Télécharger mon CV
                     </a>
                 </section>    

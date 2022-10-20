@@ -3,11 +3,8 @@
 {% block title %}Liste des commentaires{% endblock %}
 
 {% block body %}
-    {% if session.user.admin == 1 %}
     <div class="row">
-        <h1 class="text-center">Liste des commentaires</h1>
- 
-    
+        <h1 class="text-center mt-4">Liste des commentaires</h1>
 
         <nav aria-label="...">
             <ul class="pagination pagination-lg">
@@ -17,7 +14,7 @@
             </ul>
         </nav>
 
-        <table class="table">
+        <table class="table table-sm">
             <thead>
                 <tr>
                     <th scope="col">n°</th>
@@ -38,14 +35,14 @@
                     <td>
                         <form method="POST" action="">
                             <input type="hidden" name="csrf_token" value="{{session.user.token}}">
-                            <input type="hidden" id="id" name="delete" value="{{comment.id}}">
+                            <input type="hidden" id="delete" name="delete" value="{{comment.id}}">
                             <button type="submit" class="btn btn-danger">Supprimer</button>
                         </form>
                     </td>
                     <td>
                         <form method="POST" action="">
                             <input type="hidden" name="csrf_token" value="{{session.user.token}}">
-                            <input type="hidden" id="id" name="valid" value="{{comment.id}}">
+                            <input type="hidden" id="valid" name="valid" value="{{comment.id}}">
                             <button type="submit" class="btn btn-success">Valider</button>
                         </form>
                     </td>
@@ -56,5 +53,4 @@
 
 
     </div>
-    {% endif %}
 {% endblock %}

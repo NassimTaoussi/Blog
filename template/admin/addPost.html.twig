@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des commentaires{% endblock %}
+{% block title %}Ajouter un article{% endblock %}
 
 {% block body %}
     {% if session.user.admin == 1 %}
     <div class="row">
-        <h1 class="text-center">Ajouter un article</h1>
+        <h1 class="text-center mt-4">Ajouter un article</h1>
  
         <section class="container" id="addPostForm">
-            <div class="row">
-                <div class="col-6 justify-content-center">
+            <div class="row d-flex justify-content-center">
+                <div class="col-sm-10 col-md-8 justify-content-center">
                     <form method="POST" action="">
                         <input type="hidden" name="csrf_token" value="{{session.user.token}}">
                         <div class="mb-3">

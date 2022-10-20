@@ -4,11 +4,7 @@
 
 {% block body %}
     <div class="row">
-        {% if acces.admin == false %}
-            <p>{{ acces.errorMessage }}</p>
-        {% endif %}
-        {% if acces.admin == true %}
-        <h1 class="text-center">Liste des articles</h1>
+        <h1 class="text-center mt-4">Liste des articles</h1>
  
     
 
@@ -20,13 +16,13 @@
             </ul>
         </nav>
 
-        <table class="table">
+        <table class="table table-sm">
             <thead>
                 <tr>
                     <th scope="col">n°</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Auteur</th>
-                    <th scope="col">Date de mise à jour</th>
+                    <th scope="col text-center">Date de mise à jour</th>
                     <th scope="col">Supprimer</th>
                     <th scope="col">Modifier</th>
                 </tr>
@@ -48,7 +44,7 @@
                         <td>
                             <form method="POST" action="">
                                 <input type="hidden" id="id" name="id" value="{{article.id}}">
-                                <button type="submit" class="btn btn-info"><a href="/editPost/{{ article.id }}">Modifier</a></button>
+                                <button type="submit" class="btn btn-info "><a href="/editPost/{{ article.id }}" class="text-decoration-none text-dark">Modifier</a></button>
                             </form>
                         </td>
                 </tr>
@@ -56,6 +52,5 @@
             </tbody>
         </table>
     </div>
-    {% endif %}
 {% endblock %}
     
