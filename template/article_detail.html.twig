@@ -26,7 +26,7 @@
                 {% endfor %}
             </ul>
         </nav>
-
+        {% if session.user.valid == 1 %}
         <div class="col-12 border p-3" style="margin-bottom: 20px ">
             <form action="" method="post">
                 <h5>Ajouter un commentaire</h5>
@@ -43,6 +43,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+        {% endif %}
 
         {% for comment in comments %}
             <div class="col-12 border border-primary" style="margin-bottom: 20px">
