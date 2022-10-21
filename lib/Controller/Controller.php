@@ -8,7 +8,7 @@ use Twig\Loader\FilesystemLoader;
 abstract class Controller {
 
     public static function render(string $template, array $context = []) {
-        $loader = new FilesystemLoader(ROOT.'/template');
+        $loader = new FilesystemLoader(dirname(__DIR__, 2) .'/template');
 
         $twig = new Environment($loader);
         $twig->addGlobal('session', $_SESSION);

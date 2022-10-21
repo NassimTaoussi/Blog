@@ -40,12 +40,12 @@ class BlogController extends Controller {
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
                             $mail->Username = "nassim.taoussi@gmail.com";
-                            $mail->Password = "frluxawautxzygxg";
+                            $mail->Password = $_ENV['EMAIL_GMAIL_APP_KEY'];
                             $mail->SMTPSecure = 'ssl';
                             $mail->Port = 465;
 
                             $mail->setFrom($_POST['contactEmail']);
-                            $mail->addAddress('nassim.taoussi@gmail.com');
+                            $mail->addAddress($_ENV['EMAIL_RECEIPTER']);
                             $mail->isHTML(true);
                             $mail->Body = $_POST['contactMessage'];
 

@@ -7,9 +7,12 @@
     use NTaoussi\Lib\Router\Router;
     use NTaoussi\Lib\Exception\AccessDeniedException;
     use NTaoussi\Lib\Controller\Controller;
-use NTaoussi\Lib\Controller\ErrorController;
+    use NTaoussi\Lib\Controller\ErrorController;
+    use Symfony\Component\Dotenv\Dotenv;
 
-    define('ROOT', dirname(__DIR__));
+    $dotenv = new Dotenv();
+    $dotenv->load(dirname(__DIR__, 1) . '\.env', dirname(__DIR__, 1) . '\.env.local');
+
 
     $router = new Router($_SERVER['REQUEST_URI']);
 
