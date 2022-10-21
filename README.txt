@@ -1,17 +1,17 @@
 BLOG PHP
 
-** Introduction **
+**Introduction**
 
 Ce projet est le projet n°5 qui consiste a réaliser un "Blog" en PHP dans le cadre de la formation PHP/Symfony de l'organisme OpenClassrooms, réalisé selon l'architecture MVC.
 
-** Fonctionnalités **
+**Fonctionnalités**
 
 Le visiteur peut naviguer sur les différentes pages du site dont le contenu découle d'une base de données stockant les informations des utilisateurs, articles et commentaires.
 
 Un système d'authentification permet aux utilisateurs inscrits de commenter les articles mais également aux administrateurs d'interagir avec la base de données pour ajouter, modifier et supprimer du contenu.
 
 
-** Technologies **
+**Technologies**
 
 --> PHP
 --> Bootstrap
@@ -20,7 +20,7 @@ Un système d'authentification permet aux utilisateurs inscrits de commenter les
 --> Twig
 
 
-** Installation **
+**Installation**
 
 --> Rendez-vous sur mon repo a cet url https://github.com/NassimTaoussi/Blog
 
@@ -44,6 +44,6 @@ Un système d'authentification permet aux utilisateurs inscrits de commenter les
 (Dans le cas ou vous n'avez pas Composer téléchargez et installez le en suivant les étapes de la documentation officielle https://getcomposer.org/download/).
 
 
-** Auteurs **
+**Auteurs**
 
 Projet réaliser par Nassim Taoussi https://github.com/NassimTaoussi sous la supervision de Thomas Boileau https://github.com/TBoileau
