@@ -139,7 +139,7 @@ class AdminController extends Controller {
         $commentRepository = new CommentRepository();
 
         // Récupérer le nombre d'enregistrements
-        $totalComments = $commentRepository->findTotalCommentsNotValid();
+        $totalComments = $commentRepository->findTotalCommentsWithStatus(0);
 
         $nbrElementsByPage = 10;
         $nbrOfPages = ceil($totalComments / $nbrElementsByPage);

@@ -16,26 +16,22 @@ abstract class Controller {
     }
 
     public static function redirect(string $url) {
-        header('Location: '. $url);
+        header('Location:'. $url);
         exit();
     }
 
-    public static function denyAccessUnlessGranted($valid, $admin)
+    public static function denyAccessUnlessGranted($valid = null, $admin = null)
     {
         if($valid == 1) 
         {
-            if($admin == 1) 
+            if($admin == 0) 
             {
-
-            }
-            else 
-            { 
-                throw new AccessDeniedException();
+                throw new AccessDeniedException("Vous n'avez pas les droits administrateurs pour voir cette page");
             }
         }
         else 
         {
-            throw new AccessDeniedException();
+            throw new AccessDeniedException("Vous devez être connecter pour voir cette page");
         }
     }
 

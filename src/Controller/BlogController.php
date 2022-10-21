@@ -14,10 +14,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require_once '../Includes/PHPMailer/Exception.php';
-require_once '../Includes/PHPMailer/PHPMailer.php';
-require_once '../Includes/PHPMailer/SMTP.php';
-
 
 class BlogController extends Controller {
 
@@ -98,7 +94,7 @@ class BlogController extends Controller {
         $article = $articleRepository->findOneById((int)$id);
 
         // Récupérer le nombre d'enregistrements
-        $totalComments = $commentRepository->findTotalComments();
+        $totalComments = $commentRepository->findTotalCommentsByArticle($id, 1);
 
         $nbrElementsByPage = 5;
         $nbrOfPages = ceil($totalComments / $nbrElementsByPage);

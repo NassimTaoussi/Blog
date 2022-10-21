@@ -37,15 +37,35 @@ class CommentRepository extends ModelRepository {
         return (int)$comments["nbr_comments"];
     }
 
-    public function findTotalCommentsNotValid(): int
+    public function findTotalCommentsByArticle($idStatus, $idArticle): int
     {
-        $sql = "SELECT COUNT(id) AS nbr_comments FROM comment WHERE valid = 0";
+        $sql = "SELECT COUNT(id) AS nbr_comments FROM comment WHERE comment.article = :idArticle AND comment.valid = :idStatus";
         $query = $this->pdo->prepare($sql);
-        $query->execute();
+        $query->execute(
+            array(
+                ':idStatus'=> $idStatus,
+                ':idArticle' => $idArticle
+            )
+        );
         $comments = $query->fetch();
         
         return (int)$comments["nbr_comments"];
     }
+
+    public function findTotalCommentsWithStatus($id): int
+    {
+        $sql = "SELECT COUNT(id) AS nbr_comments FROM comment WHERE valid = :id";
+        $query = $this->pdo->prepare($sql);
+        $query->execute(
+            array(
+                ':id'=> $id,
+            )
+        );
+        $comments = $query->fetch();
+        
+        return (int)$comments["nbr_comments"];
+    }
+
 
     /** 
      *
