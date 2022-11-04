@@ -43,6 +43,8 @@ Un système d'authentification permet aux utilisateurs inscrits de commenter les
 - Si vous avez Composer d'installer, lancer la commande `composer install` afin de télécharger l'ensemble des librairies necessaire a ce projet.  
 (Dans le cas ou vous n'avez pas Composer téléchargez et installez le en suivant les étapes de la documentation officielle https://getcomposer.org/download/).
 
+-  Dans le .env renseigner l'host de votre base de donnée ainsi que la table du projet en question et votre identifiant et mot de passe. 
+Pour l'envoie d'email vous devrez renseigner votre mail et la clé gmail de votre compte (tutoriel ici : https://www.youtube.com/watch?v=maYnD0Sdr7c&ab_channel=BroExperts)
 
 ## Auteurs 
 

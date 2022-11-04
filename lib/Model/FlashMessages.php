@@ -1,6 +1,8 @@
 <?php
 
-class FlashMessages implements Countable, Iterator
+namespace NTaoussi\Lib\Model;
+
+class FlashMessages implements \Countable, \Iterator
 {
 	/**
 	 * @var array<array-key, array{message: string, type: string}>
@@ -9,9 +11,9 @@ class FlashMessages implements Countable, Iterator
 	
 	private int $position = 0;
 	
-	public function __construct()
+	public function __construct(&$messages)
 	{
-		$this->messages = &$_SESSION['flash'];
+		$this->messages =& $messages;
 	}
 	
 	public function count(): int
@@ -49,6 +51,14 @@ class FlashMessages implements Countable, Iterator
 	public function valid(): bool
 	{
 		return isset($this->messages[$this->position]);
+	}
+
+	/**
+	 * @param array{message: string, type: string} $message
+	 */
+	public function add(array $message): void
+	{
+		$this->messages[] = $message;
 	}
 }
 

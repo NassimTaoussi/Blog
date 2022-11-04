@@ -6,6 +6,7 @@ use NTaoussi\Src\Service\ContactFormValidator;
 use NTaoussi\Src\Service\CommentFormValidator;
 use NTaoussi\Src\Repository\ArticleRepository as ArticleRepository;
 use NTaoussi\Lib\Controller\Controller as Controller;
+use NTaoussi\Lib\Model\FlashMessages;
 use NTaoussi\Src\Model\Comment;
 use NTaoussi\Src\Model\User;
 use NTaoussi\Src\Repository\CommentRepository;
@@ -33,30 +34,7 @@ class BlogController extends Controller {
                     $errors = $form->validate($_POST);
 
                     if (empty($errors)) {
-                        try {
-                            // Tentative de création d’une nouvelle instance de la classe PHPMailer
-                            $mail = new PHPMailer (true);
-                            $mail->isSMTP();
-                            $mail->Host = 'smtp.gmail.com';
-                            $mail->SMTPAuth = true;
-                            $mail->Username = "nassim.taoussi@gmail.com";
-                            $mail->Password = $_ENV['EMAIL_GMAIL_APP_KEY'];
-                            $mail->SMTPSecure = 'ssl';
-                            $mail->Port = 465;
-
-                            $mail->setFrom($_POST['contactEmail']);
-                            $mail->addAddress($_ENV['EMAIL_RECEIPTER']);
-                            $mail->isHTML(true);
-                            $mail->Body = $_POST['contactMessage'];
-
-                            $mail->send();
-
-                        // (…)
-                        } catch (\Exception $e) {
-                                echo "Erreur : ".$mail->ErrorInfo;
-                        }               
-                        $this->redirect('/');
-                        $this->setFlash('Votre message a bien été envoyer', 'success');
+                        $this->sendEmail();
                     }
             
         }
@@ -122,6 +100,7 @@ class BlogController extends Controller {
                         
                         $comment = new Comment(null, $_SESSION['user']['id'],  $_SESSION['user']['username'], $dateNow , $_POST['content'], 0, $article->getId());
                         $commentRepository->insertComment($comment);
+                        $this->flashMessages->add(['message' => 'Commentaire soumis', 'type' => 'success']);
                         $this->redirect('/posts/' . $_POST['id']);
                     }
                 }

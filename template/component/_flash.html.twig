@@ -1,9 +1,11 @@
-<div class="toast" id="myToast">
-    <div class="toast-header">
-        <strong class="me-auto"><i class="bi-gift-fill"></i>AAA</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-    </div>
-    <div class="toast-body">
-        {{ session.flash.message}}
-    </div>
-</div>
+{% for flashMessage in flashMessages %}
+        <div class="toast" id="myToast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; bottom: 0; left: 10px;">
+            <div class="toast-header">
+                <strong class="me-auto">{{ flashMessage.type}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ flashMessage.message}}
+            </div>
+        </div>
+{% endfor %}

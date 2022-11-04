@@ -4,6 +4,9 @@
 
 {% block body %}
     <div class="row d-flex">
+
+        {% include 'component/_flash.html.twig' %}
+
         <section class="col-lg-6 col-sm-12" id="sectionPicture">
             <div class="row justify-content-center">
                     <img src="img/Nassim.jpg" class="img-fluid" alt="Me" style="width:500px; height: 800px">   
@@ -68,30 +71,4 @@
             </div>
         </section>
     </div>
-
-    {% if session.user.flash is defined %}
-        {% include 'component/_flash.html.twig' %}
-    {% endif %}
-    
-{% endblock %}
-
-{% block javascripts %}
-        <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function(){
-                var btn = document.getElementById("myBtn");
-                var element = document.getElementById("myToast");
-
-                // Create toast instance
-                var myToast = new bootstrap.Toast(element);
-
-                btn.addEventListener("click", function(){
-                    myToast.show();
-                });
-            });
-            /*window.onload = (event) => {
-                let myAlert = document.querySelectorAll('.toast');
-                let bsAlert = new bootstrap.Toast(myAlert);
-                bsAlert.show();
-            }*/
-        </script>
 {% endblock %}
