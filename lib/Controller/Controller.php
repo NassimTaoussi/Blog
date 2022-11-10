@@ -68,11 +68,11 @@ abstract class Controller {
             $mail->Body = $_POST['contactMessage'];
 
             $mail->send();
-            $this->redirect('/');
             $this->flashMessages->add(['message' => 'Message envoyer', 'type' => 'success']);
+            $this->redirect('/');
         // (…)
         } catch (\Exception $e) {
-                echo "Erreur : ".$mail->ErrorInfo;
+                return "Erreur : ".$mail->ErrorInfo;
         }               
     }
 

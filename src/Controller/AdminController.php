@@ -114,6 +114,7 @@ class AdminController extends Controller {
                             
                         $article = new Article(null, $_SESSION['user']['id'], $_SESSION['user']['username'], $_POST['title'], $dateNow , $_POST['content'], $_POST['chapo'], $_POST['picture']);
                         $articleRepository->insertPost($article);
+                        $this->flashMessages->add(['message' => 'Article ajouter', 'type' => 'success']);
                         $this->redirect('/');
                     }
                 }
