@@ -1,0 +1,22 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+
+
+Admin -> Systeme :  Demande la liste des commentaires en attente de validation
+Systeme -> Admin :  Renvoie la liste des commentaires 
+
+  alt Si Admin veut supprimer un commentaire
+    Admin -> Systeme : Suppression du commentaire
+    Systeme -> Admin : Message de confirmation
+  end
+
+ alt Si Admin veut valider un commentaire
+    Admin -> Systeme : Validation du commentaire
+    Systeme -> Admin : Message de confirmation
+  end
+  
+
+
+@enduml

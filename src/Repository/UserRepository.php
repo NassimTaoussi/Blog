@@ -17,10 +17,8 @@ class UserRepository extends ModelRepository {
             $data = $query->fetch();
             return $data;
         }
-        else{
-            $found = false;
-            return $found;
-        } 
+
+        return false;
 
     }
 
@@ -33,10 +31,9 @@ class UserRepository extends ModelRepository {
             $data = $query->fetchAll();
             return $data;
         }
-        else{
-            $found = false;
-            return $found;
-        } 
+        
+        return false;
+        
     }
 
     public function countByEmail($email){
@@ -45,8 +42,8 @@ class UserRepository extends ModelRepository {
         $query = $this->pdo->prepare($sql);
         $query->execute();
 
-            $data = $query->fetch();
-            return (int)$data['number'];
+        $data = $query->fetch();
+        return (int)$data['number'];
 
     }
 

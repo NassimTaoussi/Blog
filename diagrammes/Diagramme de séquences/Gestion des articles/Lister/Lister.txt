@@ -1,0 +1,13 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+
+Admin -> Systeme :  Demande la liste des articles
+Systeme -> Database : Envoie une requête au serveur
+Database -> Systeme : Envoie l'ensemble des articles
+Systeme -> Admin :  Renvoie la liste des articles
+
+@enduml

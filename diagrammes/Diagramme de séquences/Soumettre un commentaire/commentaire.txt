@@ -1,0 +1,18 @@
+@startuml
+
+actor User #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+ref over User : Diagramme de séquence "Lecture d'un article"
+
+User -> Systeme :  Soumet un commentaire
+  alt Si formulaire valide
+    Systeme -> Database : Insertion en base de données
+    Systeme -> User : Message de validation
+  else 
+    Systeme -> User : Message d'erreur
+  end
+ 
+
+@enduml

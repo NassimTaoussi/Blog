@@ -1,0 +1,17 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+
+Admin -> Systeme :  Demande la liste des utilisateurs
+Systeme -> Database : Envoie une requête au serveur
+Database -> Systeme : Envoie l'ensemble des utilisateurs
+Systeme -> Admin :  Renvoie la liste des utilisateur
+
+
+  
+
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+:Administrateur: #pink;line:red;line.bold;text:red
+
+
+rectangle "Gestion du blog" {
+
+Administrateur --> (Lister les commentaires) #line:red;line.bold
+(Lister les commentaires) <.. (Valider un commentaire) #green;line.dashed;text:green : extends
+(Lister les commentaires) <.. (Supprimer un commentaire) #green;line.dashed;text:green : extends
+
+Administrateur --> (Lister les articles) #line:red;line.bold
+(Lister les articles) <.. (Créer un article) #green;line.dashed;text:green : extends
+(Lister les articles) <.. (Supprimer un article) #green;line.dashed;text:green : extends
+(Lister les articles) <.. (Modifier un article) #green;line.dashed;text:green : extends
+
+}
+@enduml

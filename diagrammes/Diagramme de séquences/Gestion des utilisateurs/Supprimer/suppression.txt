@@ -1,0 +1,15 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+ref over Admin : Diagramme de séquence "Lister les utilisateurs"
+
+Admin -> Systeme : Demande d'affichage de la page de suppression
+Systeme -> Admin : Affiche la page de suppression
+Admin -> Systeme : Suppression de l'utilisateur
+Systeme -> Database : Suppression en base de données
+Systeme -> Admin : Message de confirmation
+
+@enduml

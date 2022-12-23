@@ -1,0 +1,12 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+Admin -> Systeme :  Demande la liste des commentaires en attente de validation
+Systeme -> Database :  Récupère la liste des commentaires en attente de validation
+Database -> Systeme :  Renvoie la liste des commentaires en attente de validation
+Systeme -> Admin :  Renvoie la liste des commentaires en attente de validation
+
+@enduml

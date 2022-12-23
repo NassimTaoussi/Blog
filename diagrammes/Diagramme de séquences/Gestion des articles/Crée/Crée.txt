@@ -1,0 +1,20 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+ref over Admin : Diagramme de séquence "Lister les articles"
+
+Admin -> Systeme : Demande la page de création d'un article
+    Systeme -> Admin : Renvoie la page de création d'un article
+    Admin -> Systeme : Rempli le formulaire de création et le soumet
+    
+    alt Si formulaire valide
+      Systeme -> Database : Insertion en base de données
+      Systeme -> Admin : Message de validation
+    else  
+      Systeme -> Admin : Message d'erreur
+    end
+
+@enduml

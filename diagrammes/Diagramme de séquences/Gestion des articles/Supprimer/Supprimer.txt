@@ -1,0 +1,18 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+ref over Admin : Diagramme de séquence "Lister les articles"
+
+Admin -> Systeme : Demande d'affichage de la page de suppression
+Systeme -> Database : Récupère les infos de l'article
+Database -> Systeme : Renvoie les informations de l'article
+Systeme -> Admin : Affiche la page de suppression
+Admin -> Systeme : Demande de suppression de l'article
+Systeme -> Database : Suppression en base de données
+Systeme -> Admin : Message de confirmation
+
+
+@enduml

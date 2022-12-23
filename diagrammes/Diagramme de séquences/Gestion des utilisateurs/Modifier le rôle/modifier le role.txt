@@ -1,0 +1,21 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+ref over Admin : Diagramme de séquence "Lister les utilisateurs"
+
+Admin -> Systeme : Demande d'affichage de modification d'un user
+Systeme -> Database : Récupère les infos du user
+Database -> Systeme : Renvoie les informations du user
+Systeme -> Admin : Affiche la page de modification
+Admin -> Systeme : Demande de modification du role de l'utilisateur x
+  alt Si formulaire valide
+    Systeme -> Database : Modification en base de données
+    Systeme -> Admin : Message de confirmation
+  else
+    Systeme -> Admin : Message d'erreur
+  end
+
+@enduml

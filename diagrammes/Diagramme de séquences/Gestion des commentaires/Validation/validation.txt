@@ -1,0 +1,17 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+ref over Admin : Diagramme de séquence "lister les commentaires
+
+Admin -> Systeme : Demande d'affichage de la page de validation
+Systeme -> Database : Récupère le commentaire
+Database -> Systeme : Renvoie le commentaire en attente de validation
+Systeme -> Admin : Affiche la page de validation
+Admin -> Systeme : Validation du commentaire
+Systeme -> Database : Mis à jour du statut du commentaire
+Systeme -> Admin : Message de confirmation
+
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+ref over Admin : Diagramme de séquence "lister les commentaires
+
+Admin -> Systeme : Demande la page de suppression d'un commentaire
+Systeme -> Database : Récupère le commentaire
+Database -> Systeme : Renvoie le commentaire
+Systeme -> Admin : Affiche la page de suppression d'un commentaire
+Admin -> Systeme : Demande de suppression du commentaire
+Systeme -> Database : Suppression du commentaire
+Systeme -> Admin : Message de confirmation
+@enduml

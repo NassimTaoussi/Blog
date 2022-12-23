@@ -1,0 +1,21 @@
+@startuml
+
+actor User #salmon
+control Systeme #dodgerblue
+database Mailer #green
+
+
+User -> Systeme :  Demande la page de contact
+Systeme -> User :  Renvoie la page de contact
+activate User
+deactivate User
+User -> Systeme : Soumet le formulaire
+
+alt Si le formulaire est valide
+   Systeme -> Mailer : Envoie du mail 
+   Systeme -> User : Message de validation
+else
+   Systeme -> User : Message d'erreur
+end
+
+@enduml

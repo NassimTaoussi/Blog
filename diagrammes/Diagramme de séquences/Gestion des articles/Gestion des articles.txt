@@ -1,0 +1,45 @@
+@startuml
+
+actor Admin #salmon
+control Systeme #dodgerblue
+database Database #yellow
+
+
+Admin -> Systeme :  Demande la liste des articles
+Systeme -> Database : Envoie une requête au serveur
+Database -> Systeme : Envoie l'ensemble des articles
+Systeme -> Admin :  Renvoie la liste des articles
+
+  alt Si Admin veut crée un article
+    Admin -> Systeme : Demande la page de création d'un article
+    Systeme -> Admin : Renvoie la page de création d'un article
+    Admin -> Systeme : Rempli le formulaire de création et le soumet
+    
+    alt Si formulaire valide
+      Systeme -> Database : Insertion en base de données
+      Systeme -> Admin : Message de validation
+    else  
+      Systeme -> Admin : Message d'erreur
+    end
+
+  end
+
+  alt Si Admin veut supprimer un article
+    Admin -> Systeme : Suppression de l'article
+    Systeme -> Database : Suppression en base de données
+    Systeme -> Admin : Message de confirmation
+  else
+    Systeme -> Admin : Message d'erreur
+  end
+
+ alt Si Admin veut modifier un article
+    Admin -> Systeme : Demande de modification d'un article
+    Systeme -> Database : Mise a jour en base de données
+    Systeme -> Admin : Message de confirmation
+  else
+    Systeme -> Admin : Message d'erreur
+  end
+  
+
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+User "0..1 " *-- "0..* " Comment
+User "0..1 " *-- "0..* " Post
+Post"1 " *-- "0..* " Comment
+
+class User { 
+userName : string
+email : string
+password : string
+admin : boolean
+valid : boolean
+}
+
+class Post {
+author : User
+title : string
+creationDate : DateTime
+majDate : DateTime
+content : string
+chapo : string
+picture : string
+}
+
+class Comment {
+author : User
+dateOfPost : DateTime
+content : string
+valid : boolean
+article : Article
+}
+@enduml

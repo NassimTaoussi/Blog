@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+:Administrateur: #pink;line:red;line.bold;text:red
+
+
+rectangle "Gérer les utilisateurs" {
+
+Administrateur --> (Lister les utilisateurs) #line:red;line.bold
+(Lister les utilisateurs) <.. (Modifier le rôle d'un utilisateur) #green;line.dashed;text:green : extends
+(Lister les utilisateurs) <.. (Supprimer un utilisateur) #green;line.dashed;text:green : extends
+
+}
+@enduml

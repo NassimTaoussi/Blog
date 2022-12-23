@@ -1,0 +1,9 @@
+@startuml
+
+actor User #salmon
+control Systeme #dodgerblue
+
+User -> Systeme :  Demande la page d'accueil
+Systeme -> User :  Renvoie la page d'accueil
+
+@enduml

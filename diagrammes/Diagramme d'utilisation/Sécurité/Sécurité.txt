@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+:Visiteur: #lightseagreen;line:lightseagreen;line.bold;text:lightseagreen
+:Administrateur: #pink;line:red;line.bold;text:red
+Visiteur <|-- Administrateur
+
+rectangle Sécurité {
+Visiteur --> (S'inscrire) #lightseagreen;line:lightseagreen;line.bold;text:lightseagreen
+
+Visiteur --> (S'authentifier) #lightseagreen;line:lightseagreen;line.bold;text:lightseagreen
+
+}
+@enduml
